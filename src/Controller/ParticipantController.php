@@ -63,7 +63,7 @@ class ParticipantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $participantRepository->save($participant, true);
 
-            return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_participant_profil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('participant/edit.html.twig', [
