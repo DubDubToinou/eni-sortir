@@ -29,13 +29,13 @@ class ParticipantType extends AbstractType
                 'label' => 'Téléphone'
             ])
             ->add('imageFile', VichImageType::class, [
-            'label' => 'Photo de profil',
-            'allow_delete' => false,
-            'download_label' => false,
-            'download_uri' => false,
-            'required' => false,
-            'attr' => []
-        ]);
+                'label' => 'Photo de profil',
+                'allow_delete' => false,
+                'download_label' => false,
+                'download_uri' => false,
+                'required' => false,
+                'attr' => []
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
