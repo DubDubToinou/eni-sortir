@@ -18,7 +18,7 @@
 
     <span> Campus : {{ participant.campus.nom }} </span><br>
 
-    <a href="{{ path('app_main') }}"> Retour </button>
+    <a href="{{ path('app_main') }}"> Retour </a>
 
     {% if participant is same as (app.user) %}
         <a  href="{{ path('app_participant_edit', {'id':participant.id}) }}">Modifier</a>
