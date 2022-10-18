@@ -8,6 +8,7 @@ use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/participant')]
@@ -62,7 +63,6 @@ class ParticipantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $participantRepository->save($participant, true);
-
             return $this->redirectToRoute('app_participant_profil', [], Response::HTTP_SEE_OTHER);
         }
 
