@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie index{% endblock %}
+
+{% block body %}
+    <h1>Sortie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>DateHeureDebut</th>
+                <th>Duree</th>
+                <th>DateLimiteInscription</th>
+                <th>NbInscriptionsMax</th>
+                <th>InfosSortie</th>
+                <th>Motif</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sortie in sorties %}
+            <tr>
+                <td>{{ sortie.id }}</td>
+                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ sortie.duree ? sortie.duree|date('H:i:s') : '' }}</td>
+                <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ sortie.nbInscriptionsMax }}</td>
+                <td>{{ sortie.infosSortie }}</td>
+                <td>{{ sortie.motif }}</td>
+                <td>
+                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">show</a>
+                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sortie_new') }}">Create new</a>
+{% endblock %}
