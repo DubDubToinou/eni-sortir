@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\ParticipantType;
+use App\Form\PasswordType;
 use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/participant')]
@@ -55,17 +57,29 @@ class ParticipantController extends AbstractController
     #[Route('/edit/{id}', name: 'app_participant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
-        if (!$this->getUser()){
-            return $this->redirectToRoute('app_register');
-        }
-
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $participantRepository->save($participant, true);
+            return $this->redirectToRoute('app_participant_profil', [], Response::HTTP_SEE_OTHER);
+        }
 
-            return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
+        return $this->renderForm('participant/edit.html.twig', [
+            'participant' => $participant,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/edit-password/{id}', name: 'app_participant_editPassword', methods: ['GET', 'POST'])]
+    public function editPassword(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
+    {
+        $form = $this->createForm(PasswordType::class, $participant);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $participantRepository->save($participant, true);
+            return $this->redirectToRoute('app_participant_profil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('participant/edit.html.twig', [
@@ -77,7 +91,7 @@ class ParticipantController extends AbstractController
     #[Route('/{id}', name: 'app_participant_delete', methods: ['POST'])]
     public function delete(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$participant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token'))) {
             $participantRepository->remove($participant, true);
         }
 
