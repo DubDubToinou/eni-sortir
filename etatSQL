@@ -1,0 +1,6 @@
+INSERT INTO `etat`(`id`, `libelle`) VALUES ('1','Créee');
+INSERT INTO `etat`(`id`, `libelle`) VALUES ('2','Ouverte');
+INSERT INTO `etat`(`id`, `libelle`) VALUES ('3','Cloturée');
+INSERT INTO `etat`(`id`, `libelle`) VALUES ('4','Activité en cours');
+INSERT INTO `etat`(`id`, `libelle`) VALUES ('5','Passée');
+INSERT INTO `etat`(`id`, `libelle`) VALUES ('6','Annulée');
