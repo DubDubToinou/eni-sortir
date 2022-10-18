@@ -57,10 +57,6 @@ class ParticipantController extends AbstractController
     #[Route('/edit/{id}', name: 'app_participant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
-        if (!$this->getUser()){
-            return $this->redirectToRoute('app_register');
-        }
-
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 

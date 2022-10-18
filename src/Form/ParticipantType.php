@@ -42,11 +42,8 @@ class ParticipantType extends AbstractType
                 'second_options' => ['label' => 'Confirmation'],
 
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'off'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Mot de passe obligatoire',
-                    ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Le mot de passe doit avoir une longueur minimum de {{ limit }} caractères.',
