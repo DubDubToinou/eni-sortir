@@ -49,6 +49,9 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    private ?Campus $campus = null;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -190,6 +193,18 @@ class Sortie
     public function setLieu(?Lieu $lieu): self
     {
         $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
 
         return $this;
     }
