@@ -19,6 +19,8 @@ class AdminController extends AbstractController
     #[Route('/utilisateur', name: 'admin_gerer_utilisateur')]
     public function gererUtilisateur(): Response
     {
+
+
         return $this->render('admin/gererUtilisateur.html.twig', [
         ]);
     }
