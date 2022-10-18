@@ -52,6 +52,9 @@ class Sortie
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     private ?Campus $campus = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $motif = null;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -205,6 +208,18 @@ class Sortie
     public function setCampus(?Campus $campus): self
     {
         $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(?string $motif): self
+    {
+        $this->motif = $motif;
 
         return $this;
     }
