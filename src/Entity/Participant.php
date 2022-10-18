@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -45,6 +47,14 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $Campus = null;
+
+    #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
+    private Collection $sortieOrganisees;
+
+    public function __construct()
+    {
+        $this->sortieOrganisees = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -203,6 +213,36 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCampus(?Campus $Campus): self
     {
         $this->Campus = $Campus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSortieOrganisees(): Collection
+    {
+        return $this->sortieOrganisees;
+    }
+
+    public function addSortieOrganisee(Sortie $sortieOrganisee): self
+    {
+        if (!$this->sortieOrganisees->contains($sortieOrganisee)) {
+            $this->sortieOrganisees->add($sortieOrganisee);
+            $sortieOrganisee->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieOrganisee(Sortie $sortieOrganisee): self
+    {
+        if ($this->sortieOrganisees->removeElement($sortieOrganisee)) {
+            // set the owning side to null (unless already changed)
+            if ($sortieOrganisee->getOrganisateur() === $this) {
+                $sortieOrganisee->setOrganisateur(null);
+            }
+        }
 
         return $this;
     }
