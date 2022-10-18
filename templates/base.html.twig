@@ -14,7 +14,7 @@
         <a href="{{ path('app_participant_profil')}}">Mon Profil</a>
         <a href="{{ path('app_logout') }}">Se déconnecter</a>
         {% if is_granted("ROLE_ADMIN") %}
-            <a href="#">Admin</a>
+            <a href="{{ path('admin_index') }}">Admin</a>
         {% endif %}
     {% else %}
         <a href="{{ path('app_login') }}">Se Connecter</a>
