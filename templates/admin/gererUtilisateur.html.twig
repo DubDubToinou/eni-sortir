@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }}Utilisateurs
+{% endblock %}
+
+{% block body %}
+
+    {% include'admin/inc/_navAdmin.html.twig' %}
+
+    <h3>Utilisateur Actif</h3>
+    <a href="{{ path('admin_gerer_utilisateur_non_actif') }}">Utilisateur Non Actif</a>
+
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>E-mail</th>
+            <th>Telephone</th>
+            <th>Campus</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        {% for utilisateurActif in utilisateursActif %}
+            <tr>
+                <td>{{ utilisateurActif.nom }}</td>
+                <td>{{ utilisateurActif.prenom }}</td>
+                <td>{{ utilisateurActif.email }}</td>
+                <td>{{ utilisateurActif.telephone }}</td>
+                <td>{{ utilisateurActif.campus.nom }}</td>
+                <td>{{ utilisateurActif.roles|join('')}}</td>
+                <td><a href="#">Désactiver</a>
+                <a href="#">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <a href="#">Créer un Utilisateur</a>
+
+
+{% endblock %}
+
+
+

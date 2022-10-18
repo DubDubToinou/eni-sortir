@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }}Utilisateurs
+{% endblock %}
+
+{% block body %}
+
+    {% include'admin/inc/_navAdmin.html.twig' %}
+
+    <h3>Utilisateur Actif</h3>
+    <a href="{{ path('admin_gerer_utilisateur') }}">Utilisateur Actif</a>
+
+    {% for utilisateurActif in utilisateursActif %}
+
+    {% endfor %}
+    <a href="#">Créer un Utilisateur</a>
+
+{% endblock %}
