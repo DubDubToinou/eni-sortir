@@ -40,15 +40,21 @@ class ParticipantController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_participant_show', methods: ['GET'])]
-    public function show(Participant $participant): Response
+    #[Route('/profil', name: 'app_participant_profil', methods: ['GET'])]
+    public function show(): Response
     {
-        return $this->render('participant/show.html.twig', [
-            'participant' => $participant,
-        ]);
+            $participant = $this->getUser();
+            return $this->render('participant/profil.html.twig', [
+                'participant'=>$participant,
+            ]);
+
+
+       #return $this->render('participant/profil.html.twig', [
+        #'participant' => $participant,]);
+
     }
 
-    #[Route('/{id}/edit', name: 'app_participant_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_participant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
         if (!$this->getUser()){

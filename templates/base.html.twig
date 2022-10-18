@@ -11,7 +11,7 @@
 <header>
     <a href="{{ path('app_main') }}">Accueil</a>
     {% if app.user %}
-        <a href="#">Mon Profil</a>
+        <a href="{{ path('app_participant_profil')}}">Mon Profil</a>
         <a href="{{ path('app_logout') }}">Se déconnecter</a>
         {% if is_granted("ROLE_ADMIN") %}
             <a href="#">Admin</a>
