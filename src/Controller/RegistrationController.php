@@ -27,6 +27,7 @@ class RegistrationController extends AbstractController
             $user->setAdministrateur(false);
             $user->setActif(true);
             $user->setRoles(['ROLE_USER']);
+            $user->setImageName('default.jpg');
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
