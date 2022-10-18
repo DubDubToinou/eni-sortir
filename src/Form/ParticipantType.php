@@ -37,6 +37,7 @@ class ParticipantType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être similaires',
+                'required' => false,
                 'options' => ['attr' => ['class' => 'password-field']],
                 'first_options' => ['label' => 'Nouveau mot de passe'],
                 'second_options' => ['label' => 'Confirmation'],
@@ -49,12 +50,6 @@ class ParticipantType extends AbstractType
                         'minMessage' => 'Le mot de passe doit avoir une longueur minimum de {{ limit }} caractères.',
                         'max' => 4096,
                     ]),
-                    new Regex(
-                        [
-                            'pattern' => '/"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$"/',
-                            'message' => 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial (autorisé : @, $, !, %, *, #, ?, &)'
-                        ]
-                    )
                 ],
             ])
             ->add('campus', EntityType::class, [
