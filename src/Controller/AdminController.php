@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +18,12 @@ class AdminController extends AbstractController
     }
 
     #[Route('/utilisateur', name: 'admin_gerer_utilisateur')]
-    public function gererUtilisateur(): Response
+    public function gererUtilisateur(ParticipantRepository $participantRepository): Response
     {
-
-
+        $utilisateursActif = $participantRepository->afficherTousLesUtilisateursActifs();
+        dump($utilisateursActif);
         return $this->render('admin/gererUtilisateur.html.twig', [
+            'utilisateursActif'=>$utilisateursActif
         ]);
     }
 

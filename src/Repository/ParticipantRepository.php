@@ -56,13 +56,13 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->save($user, true);
     }
 
-    public function afficherTousLesUtilisateursActifs(){
+    public function afficherTousLesUtilisateursActifs()
+    {
         $qb = $this->createQueryBuilder('participant')
-            ->where('participant.actif = 1')
+            ->andWhere('participant.actif = 1')
             ->orderBy('participant.nom', 'ASC');
-        $qb->getQuery()->getResult();
 
-        return $qb;
+        return $qb->getQuery()->getResult();
     }
 
 

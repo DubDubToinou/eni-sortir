@@ -8,6 +8,11 @@
 
     {% include'admin/inc/_navAdmin.html.twig' %}
 
+    {% for utilisateurActif in utilisateursActif %}
+        <ul>
+            <li>{{ utilisateurActif.nom }}</li>
+        </ul>
+    {% endfor %}
 
 {% endblock %}
 
