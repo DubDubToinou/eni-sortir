@@ -71,23 +71,6 @@ class ParticipantController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-password/{id}', name: 'app_participant_editPassword', methods: ['GET', 'POST'])]
-    public function editPassword(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
-    {
-        $form = $this->createForm(PasswordType::class, $participant);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $participantRepository->save($participant, true);
-            return $this->redirectToRoute('app_participant_profil', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('participant/edit.html.twig', [
-            'participant' => $participant,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/{id}', name: 'app_participant_delete', methods: ['POST'])]
     public function delete(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
