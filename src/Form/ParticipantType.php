@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ParticipantType extends AbstractType
 {
@@ -26,7 +27,15 @@ class ParticipantType extends AbstractType
             ])
             ->add('telephone', TelType::class, [
                 'label' => 'Téléphone'
-            ]);
+            ])
+            ->add('imageFile', VichImageType::class, [
+            'label' => 'Photo de profil',
+            'allow_delete' => false,
+            'download_label' => false,
+            'download_uri' => false,
+            'required' => false,
+            'attr' => []
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
