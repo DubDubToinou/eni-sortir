@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Lieu{% endblock %}
+
+{% block body %}
+    <h1>Create new Lieu</h1>
+
+    {{ include('lieu/_form.html.twig') }}
+
+    <a href="{{ path('app_lieu_index') }}">back to list</a>
+{% endblock %}

@@ -29,9 +29,10 @@
                 <td>{{ utilisateurActif.telephone }}</td>
                 <td>{{ utilisateurActif.campus.nom }}</td>
                 <td>{{ utilisateurActif.roles|join('') }}</td>
-                <td><a href="{{ path('admin_activer_utilisateur', {'id':utilisateurActif.id}) }}">Activer</a>
+                <td><a href="{{ path('admin_activer_utilisateur', {'id':utilisateurActif.id}) }}"
+                       onclick="return confirm('Voulez vous activer l\'utilisateur ?');">Activer</a>
                     <a href="{{ path('admin_supprimer_utilisateur', {'id':utilisateurActif.id}) }}"
-                       onclick="show_alert()">Supprimer</a></td>
+                       onclick="return confirm('Voulez vous supprimer l\'utilisateur ?');">Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>

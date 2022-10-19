@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Campus{% endblock %}
+
+{% block body %}
+    <h1>Create new Campus</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn" type="submit">Ajouter</button>
+    {{ form_end(form) }}
+
+
+    <a href="{{ path('app_campus_index') }}">Retour à la liste des campus</a>
+{% endblock %}
