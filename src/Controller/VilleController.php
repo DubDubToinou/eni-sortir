@@ -40,13 +40,6 @@ class VilleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_ville_show', methods: ['GET'])]
-    public function show(Ville $ville): Response
-    {
-        return $this->render('ville/show.html.twig', [
-            'ville' => $ville,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_ville_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ville $ville, VilleRepository $villeRepository): Response
@@ -66,12 +59,12 @@ class VilleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_ville_delete', methods: ['POST'])]
-    public function delete(Request $request, Ville $ville, VilleRepository $villeRepository): Response
+    #[Route('/{id}', name: 'app_ville_delete', methods: ['POST', 'GET'])]
+    public function delete(int $id, Request $request, Ville $ville, VilleRepository $villeRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
-            $villeRepository->remove($ville, true);
-        }
+
+        $villeASupprimer = $villeRepository->find($id);
+        $villeRepository->remove($villeASupprimer, true);
 
         return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
     }
