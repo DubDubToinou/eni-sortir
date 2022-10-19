@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SortieRepository $sortieRepository): Response
+    public function new(Request $request, SortieRepository $sortieRepository, VilleRepository $villeRepository): Response
     {
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
@@ -37,6 +38,7 @@ class SortieController extends AbstractController
         return $this->renderForm('sortie/new.html.twig', [
             'sortie' => $sortie,
             'form' => $form,
+            'villes' => $villeRepository->findAll(),
         ]);
     }
 
