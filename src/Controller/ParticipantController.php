@@ -42,7 +42,7 @@ class ParticipantController extends AbstractController
         ]);
     }
 
-    #[Route('/profil/{id}', name: 'app_participant_profil', methods: ['GET'])]
+    #[Route('/profil/{id}', name: 'app_participant_profil', requirements: ['id'=>'\d+'], methods: ['GET','POST'])]
     public function show(int $id, ParticipantRepository $participantRepository): Response
     {
         $participant=$participantRepository->find($id);
