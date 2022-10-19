@@ -3,13 +3,13 @@
 {% block title %}New Lieu{% endblock %}
 
 {% block body %}
-    <h1>Create new Lieu</h1>
+    <h1>Creer un nouveau Lieu</h1>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn" type="submit">Créer</button>
     {{ form_end(form) }}
 
 
-    <a href="{{ path('app_lieu_index') }}">back to list</a>
+    <a href="{{ path('app_lieu_index') }}">Retour à la liste des Lieux</a>
 {% endblock %}

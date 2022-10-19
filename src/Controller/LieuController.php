@@ -40,14 +40,6 @@ class LieuController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_lieu_show', methods: ['GET'])]
-    public function show(Lieu $lieu): Response
-    {
-        return $this->render('lieu/show.html.twig', [
-            'lieu' => $lieu,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_lieu_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Lieu $lieu, LieuRepository $lieuRepository): Response
     {
@@ -66,12 +58,11 @@ class LieuController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_lieu_delete', methods: ['POST'])]
-    public function delete(Request $request, Lieu $lieu, LieuRepository $lieuRepository): Response
+    #[Route('/{id}', name: 'app_lieu_delete', methods: ['POST' , 'GET'])]
+    public function delete(int $id, Request $request, Lieu $lieu, LieuRepository $lieuRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$lieu->getId(), $request->request->get('_token'))) {
-            $lieuRepository->remove($lieu, true);
-        }
+        $lieuASupprimer = $lieuRepository->find($id);
+        $lieuRepository->remove($lieuASupprimer, true);
 
         return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
     }
