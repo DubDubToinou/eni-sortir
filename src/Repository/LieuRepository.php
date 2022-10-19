@@ -39,6 +39,7 @@ class LieuRepository extends ServiceEntityRepository
         }
     }
 
+
 //    /**
 //     * @return Lieu[] Returns an array of Lieu objects
 //     */
