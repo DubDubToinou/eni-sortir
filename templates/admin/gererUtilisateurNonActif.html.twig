@@ -8,12 +8,33 @@
 
     {% include'admin/inc/_navAdmin.html.twig' %}
 
-    <h3>Utilisateur Actif</h3>
+    <h3>Utilisateur Non - Actif</h3>
     <a href="{{ path('admin_gerer_utilisateur') }}">Utilisateur Actif</a>
 
-    {% for utilisateurActif in utilisateursActif %}
-
-    {% endfor %}
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>E-mail</th>
+            <th>Telephone</th>
+            <th>Campus</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        {% for utilisateurActif in utilisateursActif %}
+            <tr>
+                <td>{{ utilisateurActif.nom }}</td>
+                <td>{{ utilisateurActif.prenom }}</td>
+                <td>{{ utilisateurActif.email }}</td>
+                <td>{{ utilisateurActif.telephone }}</td>
+                <td>{{ utilisateurActif.campus.nom }}</td>
+                <td>{{ utilisateurActif.roles|join('') }}</td>
+                <td><a href="{{ path('admin_activer_utilisateur', {'id':utilisateurActif.id}) }}">Activer</a>
+                    <a href="{{ path('admin_supprimer_utilisateur', {'id':utilisateurActif.id}) }}"
+                       onclick="show_alert()">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+    </table>
     <a href="#">Créer un Utilisateur</a>
 
 {% endblock %}

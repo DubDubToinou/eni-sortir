@@ -28,16 +28,26 @@
                 <td>{{ utilisateurActif.email }}</td>
                 <td>{{ utilisateurActif.telephone }}</td>
                 <td>{{ utilisateurActif.campus.nom }}</td>
-                <td>{{ utilisateurActif.roles|join('')}}</td>
-                <td><a href="#">Désactiver</a>
-                <a href="#">Supprimer</a></td>
+                <td>{{ utilisateurActif.roles|join('') }}</td>
+                <td><a href="{{ path('admin_desactiver_utilisateur', {'id':utilisateurActif.id}) }}">Désactiver</a>
+                    <a href="{{ path('admin_supprimer_utilisateur', {'id':utilisateurActif.id}) }}"
+                       {#  onclick="show_alert()"#}>Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>
 
     <a href="#">Créer un Utilisateur</a>
 
-
+{#
+    <script>
+        function show_alert() {
+            if (confirm("Voulez vous vraiment supprimer l'utilisateur ?")) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+#}
 {% endblock %}
 
 
