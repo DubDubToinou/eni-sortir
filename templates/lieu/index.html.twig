@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lieu index{% endblock %}
+
+{% block body %}
+    <h1>Lieu index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Rue</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lieu in lieus %}
+            <tr>
+                <td>{{ lieu.id }}</td>
+                <td>{{ lieu.nom }}</td>
+                <td>{{ lieu.rue }}</td>
+                <td>
+                    <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">Modifier</a>
+                    <a href="{{ path('app_lieu_delete', {'id': lieu.id}) }}"
+                       onclick=" return confirm('Voulez vous supprimer le lieu {{ lieu.nom }}');">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas d'enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_lieu_new') }}">Créer un nouveau lieu</a>
+{% endblock %}

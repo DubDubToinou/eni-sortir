@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Lieu{% endblock %}
+
+{% block body %}
+    <h1>Modifier le lieu : {{ lieu.nom ~ ' à ' ~ lieu.ville.nom }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn" type="submit">Modifier</button>
+    {{ form_end(form) }}
+
+
+    <a href="{{ path('app_lieu_index') }}">Retour à la liste</a>
+
+{% endblock %}

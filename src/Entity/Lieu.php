@@ -21,12 +21,6 @@ class Lieu
     #[ORM\Column(length: 255)]
     private ?string $rue = null;
 
-    #[ORM\Column]
-    private ?float $latitude = null;
-
-    #[ORM\Column]
-    private ?float $longitude = null;
-
     #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class)]
     private Collection $sorties;
 
@@ -64,30 +58,6 @@ class Lieu
     public function setRue(string $rue): self
     {
         $this->rue = $rue;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(float $latitude): self
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(float $longitude): self
-    {
-        $this->longitude = $longitude;
 
         return $this;
     }

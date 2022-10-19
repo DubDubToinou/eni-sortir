@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville index{% endblock %}
+
+{% block body %}
+    <h1>Liste des villes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>CodePostal</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td>{{ ville.nom }}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">Modifier</a>
+                    <a href="{{ path('app_ville_delete', {'id': ville.id}) }}"
+                       onclick="return confirm('Voulez vous supprimer la ville de {{ ville.nom }}');" >Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas de ville créee</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ville_new') }}">Ajouter une nouvelle ville</a>
+{% endblock %}
