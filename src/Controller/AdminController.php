@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\CreerUtilisateurType;
+use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\NoReturn;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin')]
@@ -68,6 +73,36 @@ class AdminController extends AbstractController
 
 
         return $this->redirectToRoute('admin_gerer_utilisateur_non_actif');
+    }
+    #[Route('/creerutilisateur', name: 'admin-creer-utilisateur')]
+    public function ajouterUnUtilisateur(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager):Response
+    {
+        $user = new Participant();
+        $form = $this->createForm(CreerUtilisateurType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setAdministrateur(false);
+            $user->setActif(true);
+            $user->setRoles(['ROLE_USER']);
+            $user->setImageName('default.jpg');
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+            return $this->redirectToRoute('admin_gerer_utilisateur');
+        }
+
+        return $this->render('registration/creerUtilisateur.html.twig',[
+            'registrationForm'=>$form->createView()
+        ]);
+
     }
 
 

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Creer Utilisateur</h1>
+
+    {{ form_start(registrationForm) }}
+
+    {{ form_widget(registrationForm) }}
+
+    <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}
