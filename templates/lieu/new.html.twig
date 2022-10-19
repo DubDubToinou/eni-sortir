@@ -5,7 +5,11 @@
 {% block body %}
     <h1>Create new Lieu</h1>
 
-    {{ include('lieu/_form.html.twig') }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
 
     <a href="{{ path('app_lieu_index') }}">back to list</a>
 {% endblock %}
