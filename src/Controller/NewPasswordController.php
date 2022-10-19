@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-#[Route('/reset-password')]
-class ResetPasswordController extends AbstractController
+#[Route('/new-password')]
+class NewPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
@@ -23,7 +23,7 @@ class ResetPasswordController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_reset_password', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_new_password', methods: ['GET', 'POST'])]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = $this->getUser();
@@ -44,7 +44,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_main');
         }
 
-        return $this->render('reset_password/reset.html.twig', [
+        return $this->render('new_password/newPassword.html.twig', [
             'resetForm' => $form->createView(),
         ]);
     }
