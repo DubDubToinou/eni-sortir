@@ -3,24 +3,26 @@
 {% block title %}Campus index{% endblock %}
 
 {% block body %}
-    <h1>Campus index</h1>
+    {% include'admin/inc/_navAdmin.html.twig' %}
+
+    <h1>Liste des Campus</h1>
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+
+            <th>NOM</th>
+            <th>ACTIONS</th>
+        </tr>
         </thead>
         <tbody>
         {% for campus in campuses %}
             <tr>
-                <td>{{ campus.id }}</td>
                 <td>{{ campus.nom }}</td>
                 <td>
-                    <a href="{{ path('app_campus_show', {'id': campus.id}) }}">show</a>
-                    <a href="{{ path('app_campus_edit', {'id': campus.id}) }}">edit</a>
+                    <a href="{{ path('app_campus_edit', {'id': campus.id}) }}">Modifier</a>
+                    <a href="{{ path('app_campus_delete', {'id': campus.id}) }}"
+                       onclick=" return confirm('Voulez vous supprimer le campus');">Supprimer</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_campus_new') }}">Create new</a>
+    <a href="{{ path('app_campus_new') }}">Créer un nouveau Campus</a>
 {% endblock %}

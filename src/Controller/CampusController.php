@@ -16,8 +16,10 @@ class CampusController extends AbstractController
     #[Route('/', name: 'app_campus_index', methods: ['GET'])]
     public function index(CampusRepository $campusRepository): Response
     {
+        $campuses = $campusRepository->findAll();
+
         return $this->render('campus/index.html.twig', [
-            'campuses' => $campusRepository->findAll(),
+            'campuses'=>$campuses
         ]);
     }
 
@@ -40,14 +42,6 @@ class CampusController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_campus_show', methods: ['GET'])]
-    public function show(Campus $campus): Response
-    {
-        return $this->render('campus/show.html.twig', [
-            'campus' => $campus,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_campus_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Campus $campus, CampusRepository $campusRepository): Response
     {
@@ -66,12 +60,11 @@ class CampusController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_campus_delete', methods: ['POST'])]
-    public function delete(Request $request, Campus $campus, CampusRepository $campusRepository): Response
+    #[Route('/{id}', name: 'app_campus_delete', methods: ['POST', 'GET'])]
+    public function delete(int $id, Request $request, Campus $campus, CampusRepository $campusRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$campus->getId(), $request->request->get('_token'))) {
-            $campusRepository->remove($campus, true);
-        }
+        $campusASupprimer = $campusRepository->find($id);
+        $campusRepository->remove($campusASupprimer, true);
 
         return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
     }
