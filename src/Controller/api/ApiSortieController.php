@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Repository\CampusRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiSortieController extends AbstractController
 {
 
-    #[Route('/sortie/{idCampus}', name:'api_sortie_liste', methods: ['GET'])]
-    public function liste(int $idCampus, SortieRepository $sortieRepository, CampusRepository $campusRepository)
+    #[Route('sortie/{idCampus}', name:'api_sortie_liste', methods: ['GET'])]
+    public function liste(int $idCampus, SortieRepository $sortieRepository, CampusRepository $campusRepository): JsonResponse
     {
 
         $campus = $campusRepository->find($idCampus);

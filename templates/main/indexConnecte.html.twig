@@ -11,7 +11,7 @@
         <label for="campus">Campus:</label>
         <select id="campus">
             {% for campus in campuses %}
-                <option>{{ campus.nom }}</option>
+                <option value="{{ campus.id }}">{{ campus.nom }}</option>
             {% endfor %}
         </select>
 
@@ -36,6 +36,48 @@
         <label for="sortiePassee">Sortie passées</label>
         <input type="checkbox" id="sortiePassee" name="sortiePassee">
 
+        <table>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture Inscription</th>
+                <th>Inscrits/Places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+            <tr id="contenu">
+
+            </tr>
+        </table>
+
     </div>
+
+    <script>
+        window.onload = () =>{
+            const campus = document.querySelector("#campus");
+            campus.addEventListener("change", ()=> {
+                generationListe(campus.value);
+            })
+
+            function generationListe(campus){
+                fetch('{{ app.request.basePath }}/api/sortie/' + campus,
+                    {
+                        method: "GET",
+                        header: { 'Accept' : 'application/json'}
+                    }
+                ).then(response=>response.json())
+                    .then(response =>{
+                        let td = ""
+
+                        response.map(sortie =>{
+                            td += `<td>${sortie.nom}</td>`
+                        })
+                        document.querySelector("#contenu").innerHTML = td
+                    })
+            }
+        }
+    </script>
 
 {% endblock %}
