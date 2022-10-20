@@ -75,8 +75,8 @@
                             td += `<td>${sortie.dateHeureDebut}</td>`
                             td += `<td>${sortie.dateLimiteInscription}</td>`
                             td += `<td>${sortie.nbInscriptionsMax}</td>`
-                            td += `<td>${sortie.participants + ' / '+sortie.dateLimiteInscription}</td>`
                             td += `<td>${sortie.etat.libelle}</td>`
+                            td += `<td>${sortie.participants.}</td>`
                             td += `<td>${sortie.organisateur.nom + ' ' +sortie.organisateur.prenom}</td>`
                             })
                         document.querySelector("#contenu").innerHTML = td
