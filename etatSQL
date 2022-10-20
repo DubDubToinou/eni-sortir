@@ -12,3 +12,7 @@ INSERT INTO `etat`(`id`, `libelle`) VALUES ('6','Annulée');
 INSERT INTO `campus`(`id`, `nom`) VALUES ('1','Campus en ligne');
 INSERT INTO `campus`(`id`, `nom`) VALUES ('2','Campus Rennes');
 INSERT INTO `campus`(`id`, `nom`) VALUES ('3','Campus Nantes');
+
+# Ajout de Sortie
+
+INSERT INTO `sortie`(`id`, `nom`, `date_heure_debut`, `duree`, `date_limite_inscription`, `nb_inscriptions_max`, `infos_sortie`, `organisateur_id`, `etat_id`, `lieu_id`, `campus_id`, `motif`) VALUES ('1','Thêatre','2022-11-20 14:00:00','05:00:00','2022-11-25 14:00:00','20','Piece de theatre','29','2','1','3','')
