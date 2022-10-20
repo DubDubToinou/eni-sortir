@@ -3,50 +3,62 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-    <h1>Sortie {{ sortie.nom ~ ' à ' ~  sortie.lieu.nom  ~ ' le: '  sortie.dateHeureDebut|date('Y-m-d H:i:s')  }}</h1>
-    <h3>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('Y-m-d H:i:s') }}</h3>
+    <h1>Sortie {{ sortie.nom ~ ' le : ' ~ sortie.dateHeureDebut|date('d-m-Y H:i:s') }}</h1>
+    <h3>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('d-m-Y H:i:s') }}</h3>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sortie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr>
-                <th>DateHeureDebut</th>
-                <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ sortie.duree ? sortie.duree|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateLimiteInscription</th>
-                <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NbInscriptionsMax</th>
-                <td>{{ sortie.nbInscriptionsMax }}</td>
-            </tr>
-            <tr>
-                <th>InfosSortie</th>
-                <td>{{ sortie.infosSortie }}</td>
-            </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ sortie.nom }}</td>
+        </tr>
+        <tr>
+            <th>Date et Heure de la sortie</th>
+            <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Duree</th>
+            <td>{{ sortie.duree ? sortie.duree|date('H:i') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Nombre de place</th>
+            <td>{{ sortie.nbInscriptionsMax }}</td>
+        </tr>
+        <tr>
+            <th>Description et Infos</th>
+            <td>{{ sortie.infosSortie }}</td>
+        </tr>
+        <tr>
+            <th>Campus</th>
+            <td>{{ sortie.campus.nom }}</td>
+        </tr>
+        <tr>
+            <th>Lieu</th>
+            <td>{{ sortie.lieu.nom ~ ' - ' ~ sortie.lieu.rue ~ ' - ' ~ sortie.lieu.ville.nom ~ ' - ' ~ sortie.lieu.ville.codePostal }}</td>
+        </tr>
+
+        {% if sortie.motif %}
             <tr>
                 <th>Motif</th>
                 <td>{{ sortie.motif }}</td>
             </tr>
+        {% endif %}
         </tbody>
+
+    </table>
+
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Telephone</th>
+        </tr>
     </table>
 
     <a href="{{ path('app_sortie_index') }}">Retour à la liste des sorties</a>
 
-    {% if participant is same as (app.user) %}
-        <a  href="{{ path('app_sortie_edit', {'id':sortie.id}) }}">Modifier</a>
+    {% if sortie.organisateur is same as (app.user) %}
+        <a href="{{ path('app_sortie_edit', {'id':sortie.id}) }}">Modifier</a>
     {% endif %}
 
 {% endblock %}
