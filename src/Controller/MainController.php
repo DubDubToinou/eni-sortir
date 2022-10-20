@@ -21,4 +21,16 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/index', name: 'app_main_connecte')]
+    public function indexConnecte(): Response
+    {
+
+        //récupération de l'utilisateur en cours.
+        $user = $this->getUser();
+
+        return $this->render('main/indexConnecte.html.twig', [
+            'utilisateur' => $user,
+        ]);
+    }
+
 }

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}Accueil{% endblock %}
+
+{% block body %}
+
+    <h1>Bienvenue sur votre application de sortie !</h1>
+
+    {% if app.user %}
+        <h2>Bonjour {{ app.user.prenom ~ ' ' ~ app.user.nom|upper }}</h2>
+    {% endif %}
+
+
+
+{% endblock %}
