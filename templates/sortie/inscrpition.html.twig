@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}
+    <div>
+        <span>
+            {{ sortie.nom }}
+        </span>
+        <br>
+        <span>
+            {{ sortie.dateHeureDebut }}
+        </span>
+        <br>
+        <span>
+            {{ sortie.duree }}
+        </span>
+        <br>
+        <span>
+            {{ sortie.nbInscriptionsMax }}
+        </span>
+        <br>
+        <span>
+            {{ sortie.infosSortie }}
+        </span>
+        <br>
+        <span>
+            {{ sortie.campus.nom }}
+        </span>
+        <br>
+        <span>
+            {{ sortie.lieu.nom }}
+        </span>
+    </div>
+
+    <button type="submit" {{ path('app_inscription_sortie') }}>S'incrire</button>
+
+{% endblock %}

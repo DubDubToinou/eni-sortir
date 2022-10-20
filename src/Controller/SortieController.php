@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,4 +79,17 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET'])]
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
+    {
+        if(! $sortie->getNbInscriptionsMax()){
+        $participant = $this->getUser();
+        $sortie=$sortieRepository->find($id);
+        $sortie->addParticipant($participant);
+            $sortieRepository->save($sortie);
+            return $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+        }
+        return $this->addFlash('text', 'Sortie Complète.');
+    }
+
 }
