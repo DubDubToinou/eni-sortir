@@ -66,6 +66,8 @@ class CampusController extends AbstractController
         $campusASupprimer = $campusRepository->find($id);
         $campusRepository->remove($campusASupprimer, true);
 
+        $this->addFlash('success', 'Campus supprimé avec succes');
+
         return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
     }
 }
