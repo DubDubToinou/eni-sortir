@@ -75,6 +75,8 @@ class AdminController extends AbstractController
         $participantAActiver->setActif(1);
         $participantRepository->save($participantAActiver, true);
 
+        $this->addFlash('success', 'Utilisateur Activé');
+
 
         return $this->redirectToRoute('admin_gerer_utilisateur_non_actif');
     }
@@ -99,6 +101,8 @@ class AdminController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->addFlash('success', 'l\'utilisateur a bien été crée !');
             // do anything else you need here, like send an email
             return $this->redirectToRoute('admin_gerer_utilisateur');
         }
