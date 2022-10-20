@@ -68,6 +68,8 @@ class LieuController extends AbstractController
         $lieuASupprimer = $lieuRepository->find($id);
         $lieuRepository->remove($lieuASupprimer, true);
 
+        $this->addFlash('success', 'Le lieu a été supprimé');
+
         return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
     }
 }
