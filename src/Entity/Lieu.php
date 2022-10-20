@@ -26,7 +26,7 @@ class Lieu
     private ?string $rue = null;
 
     #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class)]
-    #[Groups('listeSortie:read')]
+
     private Collection $sorties;
 
     #[ORM\ManyToOne(inversedBy: 'lieux')]

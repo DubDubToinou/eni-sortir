@@ -26,7 +26,6 @@ class Campus
     private Collection $participants;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Sortie::class)]
-    #[Groups('listeSortie:read')]
     private Collection $sorties;
 
     public function __construct()

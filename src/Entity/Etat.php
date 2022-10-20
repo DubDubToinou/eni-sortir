@@ -22,7 +22,7 @@ class Etat
     private ?string $libelle = null;
 
     #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class)]
-    #[Groups('listeSortie:read')]
+
     private Collection $sorties;
 
     public function __construct()
