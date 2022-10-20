@@ -3,8 +3,8 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-    <h1>Sortie {{ sortie.nom ~ ' à ' ~  sortie.lieu.nom  ~ ' le: '  sortie.dateHeureDebut  }}</h1>
-    <h3>Fin des inscriptions le : {{ sortie.dateLimiteInscription }}</h3>
+    <h1>Sortie {{ sortie.nom ~ ' à ' ~  sortie.lieu.nom  ~ ' le: '  sortie.dateHeureDebut|date('Y-m-d H:i:s')  }}</h1>
+    <h3>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('Y-m-d H:i:s') }}</h3>
 
     <table class="table">
         <tbody>
