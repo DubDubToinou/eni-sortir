@@ -23,7 +23,24 @@ class ApiSortieController extends AbstractController
         return $this->json(
             $sorties,
             Response::HTTP_OK,
+            [],
+            ['groups'=>'listeSortie:read']
         );
 
     }
+
+/*
+    #[Route('sortie', name:'api_sortie_liste', methods: ['GET'])]
+    public function liste2(SortieRepository $sortieRepository, CampusRepository $campusRepository): JsonResponse
+    {
+
+        $sorties = $sortieRepository->findAll();
+        return $this->json(
+            $sorties,
+            Response::HTTP_OK,
+            [],
+            ['groups'=>'listeSortie:read']
+        );
+
+    }*/
 }

@@ -26,12 +26,10 @@ class Lieu
     private ?string $rue = null;
 
     #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class)]
-
     private Collection $sorties;
 
     #[ORM\ManyToOne(inversedBy: 'lieux')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('listeSortie:read')]
     private ?Ville $ville = null;
 
     public function __construct()
