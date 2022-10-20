@@ -33,6 +33,8 @@ class CampusController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $campusRepository->save($campus, true);
 
+            $this->addFlash('success', 'Campus crée avec succes');
+
             return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
         }
 
