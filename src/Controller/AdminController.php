@@ -62,6 +62,8 @@ class AdminController extends AbstractController
         $participantADesactiver->setActif(0);
         $participantRepository->save($participantADesactiver, true);
 
+        $this->addFlash('success', 'Utilisateur modifié');
+
 
         return $this->redirectToRoute('admin_gerer_utilisateur');
     }
