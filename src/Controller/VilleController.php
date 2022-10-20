@@ -70,6 +70,9 @@ class VilleController extends AbstractController
         $villeASupprimer = $villeRepository->find($id);
         $villeRepository->remove($villeASupprimer, true);
 
+        $this->addFlash('success', 'Ville supprimée avec succes');
+
+
         return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
     }
 }
