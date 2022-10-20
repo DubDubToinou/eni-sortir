@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
@@ -20,12 +21,15 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('listeSortie:read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups('listeSortie:read')]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups('listeSortie:read')]
     private array $roles = [];
 
     /**
@@ -35,18 +39,22 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups('listeSortie:read')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups('listeSortie:read')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 10)]
+    #[Groups('listeSortie:read')]
     private ?string $telephone = null;
 
     #[ORM\Column]
     private ?bool $administrateur = null;
 
     #[ORM\Column]
+    #[Groups('listeSortie:read')]
     private ?bool $actif = null;
 
     #[Vich\UploadableField(mapping: 'avatar', fileNameProperty: 'imageName')]

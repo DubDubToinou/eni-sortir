@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -14,42 +15,54 @@ class Sortie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('listeSortie:read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups('listeSortie:read')]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('listeSortie:read')]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Groups('listeSortie:read')]
     private ?\DateTimeInterface $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('listeSortie:read')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Groups('listeSortie:read')]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups('listeSortie:read')]
     private ?string $infosSortie = null;
 
     #[ORM\ManyToOne(inversedBy: 'sortieOrganisees')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('listeSortie:read')]
     private ?Participant $organisateur = null;
 
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'sortieInscrit')]
+    #[Groups('listeSortie:read')]
     private Collection $participants;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('listeSortie:read')]
     private ?Etat $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('listeSortie:read')]
     private ?Lieu $lieu = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[Groups('listeSortie:read')]
     private ?Campus $campus = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
