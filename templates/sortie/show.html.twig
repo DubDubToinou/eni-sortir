@@ -4,7 +4,8 @@
 
 {% block body %}
     <h1>Sortie {{ sortie.nom ~ ' le : ' ~ sortie.dateHeureDebut|date('d-m-Y H:i:s') }}</h1>
-    <h3>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('d-m-Y H:i:s') }}</h3>
+    <h2>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('d-m-Y H:i:s') }}</h2>
+    <h3>Organisé par : {{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom ~ ' du campus : ' ~ sortie.campus.nom}}</h3>
 
     <table class="table">
         <tbody>
@@ -53,6 +54,13 @@
             <th>Prenom</th>
             <th>Telephone</th>
         </tr>
+        {% for participant in sortie.participants %}
+        <tr>
+            <td>{{ participant.nom|upper }}</td>
+            <td>{{ participant.prenom }}</td>
+            <td>{{ participant.telephone }}</td>
+        </tr>
+        {% endfor %}
     </table>
 
     <a href="{{ path('app_sortie_index') }}">Retour à la liste des sorties</a>
