@@ -50,6 +50,8 @@ class AdminController extends AbstractController
 
         $participantRepository->remove($participantASupprimer, true);
 
+        $this->addFlash('success', 'Utilisateur supprimé');
+
         return $this->redirectToRoute('admin_gerer_utilisateur');
     }
 
@@ -59,6 +61,8 @@ class AdminController extends AbstractController
         $participantADesactiver = $participantRepository->find($id);
         $participantADesactiver->setActif(0);
         $participantRepository->save($participantADesactiver, true);
+
+        $this->addFlash('success', 'Utilisateur modifié');
 
 
         return $this->redirectToRoute('admin_gerer_utilisateur');
@@ -70,6 +74,8 @@ class AdminController extends AbstractController
         $participantAActiver = $participantRepository->find($id);
         $participantAActiver->setActif(1);
         $participantRepository->save($participantAActiver, true);
+
+        $this->addFlash('success', 'Utilisateur Activé');
 
 
         return $this->redirectToRoute('admin_gerer_utilisateur_non_actif');
@@ -95,6 +101,8 @@ class AdminController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->addFlash('success', 'l\'utilisateur a bien été crée !');
             // do anything else you need here, like send an email
             return $this->redirectToRoute('admin_gerer_utilisateur');
         }

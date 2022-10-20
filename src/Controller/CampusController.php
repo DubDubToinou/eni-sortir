@@ -33,6 +33,8 @@ class CampusController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $campusRepository->save($campus, true);
 
+            $this->addFlash('success', 'Campus crée avec succes');
+
             return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -51,6 +53,8 @@ class CampusController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $campusRepository->save($campus, true);
 
+            $this->addFlash('success', 'Campus modifié avec succes');
+
             return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +69,8 @@ class CampusController extends AbstractController
     {
         $campusASupprimer = $campusRepository->find($id);
         $campusRepository->remove($campusASupprimer, true);
+
+        $this->addFlash('success', 'Campus supprimé avec succes');
 
         return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
     }

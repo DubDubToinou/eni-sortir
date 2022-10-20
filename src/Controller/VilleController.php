@@ -31,6 +31,8 @@ class VilleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->save($ville, true);
 
+            $this->addFlash('success', 'Ville créee avec succes');
+
             return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -50,6 +52,8 @@ class VilleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->save($ville, true);
 
+            $this->addFlash('success', 'Ville modifié avec succes');
+
             return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +69,9 @@ class VilleController extends AbstractController
 
         $villeASupprimer = $villeRepository->find($id);
         $villeRepository->remove($villeASupprimer, true);
+
+        $this->addFlash('success', 'Ville supprimée avec succes');
+
 
         return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
     }

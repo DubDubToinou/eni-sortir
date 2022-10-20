@@ -3,7 +3,8 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-    <h1>Sortie</h1>
+    <h1>Sortie {{ sortie.nom ~ ' à ' ~  sortie.lieu.nom  ~ ' le: '  sortie.dateHeureDebut  }}</h1>
+    <h3>Fin des inscriptions le : {{ sortie.dateLimiteInscription }}</h3>
 
     <table class="table">
         <tbody>
@@ -42,9 +43,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_sortie_index') }}">back to list</a>
+    <a href="{{ path('app_sortie_index') }}">Retour à la liste des sorties</a>
 
-    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
+    {% if participant is same as (app.user) %}
+        <a  href="{{ path('app_sortie_edit', {'id':sortie.id}) }}">Modifier</a>
+    {% endif %}
 
-    {{ include('sortie/_delete_form.html.twig') }}
 {% endblock %}

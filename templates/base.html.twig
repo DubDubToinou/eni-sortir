@@ -23,6 +23,17 @@
 
 </header>
 <main>
+    {# ------------ For pour affichage des message flash -------------- #}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+
     {% block body %}
 
     {% endblock %}
