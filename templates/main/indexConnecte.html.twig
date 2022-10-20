@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}Accueil{% endblock %}
+
+{% block body %}
+
+    <h4>Date du jour : {{ 'now'|date('d-m-Y') }}</h4>
+    <h5>Connecté : {{ participant.nom|upper ~ ' ' ~ participant.prenom }}</h5>
+    <div>
+        <h3>Filtrer les sorties</h3>
+        <label for="campus">Campus:</label>
+        <select id="campus">
+            {% for campus in campuses %}
+                <option value="{{ campus.id }}">{{ campus.nom }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="rechercher">le nom de la sortie contient :</label>
+        <input type="search" id="rechercher">
+
+        <label for="dateDebut">Entre</label>
+        <input type="date" id="dateDebut">
+
+        <label for="dateFin">et</label>
+        <input type="date" id="dateFin">
+
+        <label for="sortieOrganisateur">Sortie dont je suis l'organisateur/trice</label>
+        <input type="checkbox" id="sortieOrganisateur" name="sortieOrganisateur">
+
+        <label for="sortieInscrit">Sortie dont je suis l'organisateur/trice</label>
+        <input type="checkbox" id="sortieInscrit" name="sortieInscrit/e">
+
+        <label for="sortiePasInscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
+        <input type="checkbox" id="sortiePasInscrit" name="sortiePasInscrit">
+
+        <label for="sortiePassee">Sortie passées</label>
+        <input type="checkbox" id="sortiePassee" name="sortiePassee">
+
+        <table>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture Inscription</th>
+                <th>Inscrits/Places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+            <tr id="contenu">
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+        window.onload = () =>{
+            const campus = document.querySelector("#campus");
+            campus.addEventListener("change", ()=> {
+                generationListe(campus.value);
+            })
+
+            function generationListe(campus){
+                fetch('{{ app.request.basePath }}/api/sortie/' + campus,
+                    {
+                        method: "GET",
+                        header: { 'Accept' : 'application/json'}
+                    }
+                ).then(response=>response.json())
+                    .then(response =>{
+                        let td = ""
+
+                        response.map(sortie =>{
+                            td += `<td>${sortie.nom}</td>`
+                            td += `<td>${sortie.dateHeureDebut}</td>`
+                            td += `<td>${sortie.dateLimiteInscription}</td>`
+                            td += `<td>${sortie.nbInscriptionsMax}</td>`
+                            td += `<td>${sortie.etat.libelle}</td>`
+                            td += `<td>${sortie.participants}</td>`
+                            td += `<td>${sortie.organisateur.nom + ' ' +sortie.organisateur.prenom}</td>`
+                            })
+                        document.querySelector("#contenu").innerHTML = td
+                    })
+            }
+        }
+    </script>
+
+{% endblock %}
