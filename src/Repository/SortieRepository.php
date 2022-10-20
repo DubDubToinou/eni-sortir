@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Campus;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,6 +40,17 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function listeSortieParCampus(Campus $campus)
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb->innerJoin('s.campus', 'campus')
+            ->addSelect('campus');
+
+        $qb->where('s.campus = :campus')
+            ->setParameter('campus', $campus);
+
+        return $qb->getQuery()->getResult();
+    }
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects
 //     */
