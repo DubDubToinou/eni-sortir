@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Sortie {{ sortie.nom ~ ' le : ' ~ sortie.dateHeureDebut|date('d-m-Y H:i:s') }}</h1>
     <h2>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('d-m-Y H:i:s') }}</h2>
-    <h3>Organisé par : {{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom ~ ' du campus : ' ~ sortie.campus.nom}}</h3>
+    +<h3>Organisé par : {{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom ~ ' du campus : ' ~ sortie.campus.nom}}</h3>
 
     <table class="table">
         <tbody>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <th>Nombre de place</th>
-            <td>{{ sortie.nbInscriptionsMax }}</td>
+            <td>{{ sortie.participants.count ~ ' / ' ~ sortie.nbInscriptionsMax }}</td>
         </tr>
         <tr>
             <th>Description et Infos</th>
@@ -62,6 +62,12 @@
         </tr>
         {% endfor %}
     </table>
+
+        {% if sortie.participants is same as (app.user) %}
+            <a href="{{ path('app_desistement_sortie', {'id':sortie.id}) }}">Se désister</a>
+        {% else %}
+            <a href="{{ path('app_inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>
+        {% endif %}
 
     <a href="{{ path('app_sortie_index') }}">Retour à la liste des sorties</a>
 

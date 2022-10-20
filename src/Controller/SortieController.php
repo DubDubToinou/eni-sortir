@@ -82,17 +82,26 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET'])]
+    #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET', 'POST'])]
     public function inscriptionSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
     {
-        if(! $sortie->getNbInscriptionsMax()){
         $participant = $this->getUser();
         $sortie=$sortieRepository->find($id);
         $sortie->addParticipant($participant);
-            $sortieRepository->save($sortie);
-            return $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
-        }
-        return $this->addFlash('text', 'Sortie Complète.');
-    }
+            $sortieRepository->save($sortie,true);
+            $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
 
+        return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/desistement/{id}', name:'app_desistement_sortie', methods: ['GET', 'POST'])]
+    public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
+    {
+        $participant = $this->getUser();
+        $sortie=$sortieRepository->find($id);
+        $sortie->removeParticipant($participant);
+        $sortieRepository->save($sortie,true);
+        $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+
+        return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+    }
 }
