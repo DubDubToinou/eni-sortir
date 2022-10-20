@@ -50,6 +50,8 @@ class AdminController extends AbstractController
 
         $participantRepository->remove($participantASupprimer, true);
 
+        $this->addFlash('success', 'Utilisateur supprimé');
+
         return $this->redirectToRoute('admin_gerer_utilisateur');
     }
 
