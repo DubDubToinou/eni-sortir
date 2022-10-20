@@ -8,14 +8,6 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <label for="ville">Ville</label>
-    <select name="ville" id="ville">
-        <option value="" disabled selected>Choisissez une ville</option>
-    {% for ville in villes %}
-        <option value="{{ ville.nom }}">{{ ville.nom }}</option>
-    {% endfor %}
-    </select>
-
     <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
 
