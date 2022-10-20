@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/sortie')]
 class SortieController extends AbstractController
 {
@@ -28,10 +29,16 @@ class SortieController extends AbstractController
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
+        /** @var Participant $user */
+        $user = $this->getUser();
+
+        $sortie->setCampus($user->getCampus());
         $sortie->setOrganisateur($this->getUser());
         $sortie->setEtat($etatRepository->find(1));
 
