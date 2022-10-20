@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
+use App\Repository\CampusRepository;
+use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,14 +25,15 @@ class MainController extends AbstractController
     }
 
     #[Route('/index', name: 'app_main_connecte')]
-    public function indexConnecte(): Response
+    public function indexConnecte(ParticipantRepository $participantRepository, CampusRepository $campusRepository): Response
     {
 
-        //récupération de l'utilisateur en cours.
-        $user = $this->getUser();
+        $participant = $participantRepository->find($this->getUser());
+        $campus = $campusRepository->findAll();
 
         return $this->render('main/indexConnecte.html.twig', [
-            'utilisateur' => $user,
+            'participant' => $participant,
+            'campuses'=>$campus,
         ]);
     }
 

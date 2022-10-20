@@ -4,12 +4,38 @@
 
 {% block body %}
 
-    <h1>Bienvenue sur votre application de sortie !</h1>
+    <h4>Date du jour : {{ 'now'|date('d-m-Y') }}</h4>
+    <h5>Connecté : {{ participant.nom|upper ~ ' ' ~ participant.prenom }}</h5>
+    <div>
+        <h3>Filtrer les sorties</h3>
+        <label for="campus">Campus:</label>
+        <select id="campus">
+            {% for campus in campuses %}
+                <option>{{ campus.nom }}</option>
+            {% endfor %}
+        </select>
 
-    {% if app.user %}
-        <h2>Bonjour {{ app.user.prenom ~ ' ' ~ app.user.nom|upper }}</h2>
-    {% endif %}
+        <label for="rechercher">le nom de la sortie contient :</label>
+        <input type="search" id="rechercher">
 
+        <label for="dateDebut">Entre</label>
+        <input type="date" id="dateDebut">
 
+        <label for="dateFin">et</label>
+        <input type="date" id="dateFin">
+
+        <label for="sortieOrganisateur">Sortie dont je suis l'organisateur/trice</label>
+        <input type="checkbox" id="sortieOrganisateur" name="sortieOrganisateur">
+
+        <label for="sortieInscrit">Sortie dont je suis l'organisateur/trice</label>
+        <input type="checkbox" id="sortieInscrit" name="sortieInscrit/e">
+
+        <label for="sortiePasInscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
+        <input type="checkbox" id="sortiePasInscrit" name="sortiePasInscrit">
+
+        <label for="sortiePassee">Sortie passées</label>
+        <input type="checkbox" id="sortiePassee" name="sortiePassee">
+
+    </div>
 
 {% endblock %}
