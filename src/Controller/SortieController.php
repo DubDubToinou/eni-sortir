@@ -95,18 +95,17 @@ class SortieController extends AbstractController
     {
         $participant = $this->getUser();
         $sortie = $sortieRepository->find($id);
-        $sortie->addParticipant($participant);
-        $sortieRepository->save($sortie, true);
-
-        foreach ($inscrits = $sR->listeSortieAvecParticipants($id) as $item){
-            if ($participant === $item) {
+        $inscrits = $sortie->getParticipants();
+        foreach ( $inscrits as $inscrit){
+            if ($participant === $inscrit) {
                 $this->addFlash('text', 'Mais?! Vous êtes déjà inscrit! Peut être un peu Teubé? Cordialement, le Développeur.');
-                return $this->redirectToRoute('app_sortie_show');
-
-            } else {
-                $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+                return $this->redirectToRoute('app_sortie_show',['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+                break;
             }
         }
+        $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+        $sortie->addParticipant($participant);
+        $sortieRepository->save($sortie, true);
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
 
