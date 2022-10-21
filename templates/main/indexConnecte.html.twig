@@ -57,7 +57,7 @@
                     <td>{{ sortie.participants.count ~ ' / ' ~sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.etat.libelle }}</td>
                     <td>
-                        {% for participant in sortie.participants%}
+                        {% for participant in sortie.participants %}
                             {% if participant is same as (app.user) %}
                                 X
                             {% endif %}
@@ -66,9 +66,16 @@
                     <td>{{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom }}</td>
                     <td>
                         <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+                        {% for participant in sortie.participants %}
+                            {% if participant is same as (app.user) %}
+                                <a href="{{ path('app_desistement_sortie', {'id': sortie.id}) }}">Se désister</a>
+                            {% endif %}
+                            {% if participant is not same as (app.user) %}
+                                <a href="#">S'inscrire</a>
+                            {% endif %}
+                        {% endfor %}
 
-                        <a href="#">S'inscrire</a>
-                        <a href="#">Se désister</a>
+
                         {% if sortie.organisateur is same as app.user %}
                             <a href="#">Modifier</a>
                             <a href="#">Annuler</a>
