@@ -48,41 +48,11 @@
                 <th>Actions</th>
             </tr>
             <tr id="contenu">
+                <td>{{  }}</td>
             </tr>
         </table>
 
     </div>
 
-    <script>
-        window.onload = () =>{
-            const campus = document.querySelector("#campus");
-            campus.addEventListener("change", ()=> {
-                generationListe(campus.value);
-            })
-
-            function generationListe(campus){
-                fetch('{{ app.request.basePath }}/api/sortie/' + campus,
-                    {
-                        method: "GET",
-                        header: { 'Accept' : 'application/json'}
-                    }
-                ).then(response=>response.json())
-                    .then(response =>{
-                        let td = ""
-
-                        response.map(sortie =>{
-                            td += `<td>${sortie.nom}</td>`
-                            td += `<td>${sortie.dateHeureDebut}</td>`
-                            td += `<td>${sortie.dateLimiteInscription}</td>`
-                            td += `<td>${sortie.nbInscriptionsMax}</td>`
-                            td += `<td>${sortie.etat.libelle}</td>`
-                            td += `<td>${sortie.participants}</td>`
-                            td += `<td>${sortie.organisateur.nom + ' ' +sortie.organisateur.prenom}</td>`
-                            })
-                        document.querySelector("#contenu").innerHTML = td
-                    })
-            }
-        }
-    </script>
 
 {% endblock %}
