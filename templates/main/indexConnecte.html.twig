@@ -66,14 +66,19 @@
                     <td>{{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom }}</td>
                     <td>
                         <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+
+                        {% set compteurParticipantInscrit = 0 %}
+
                         {% for participant in sortie.participants %}
                             {% if participant is same as (app.user) %}
+                                {% set compteurParticipantInscrit = compteurParticipantInscrit +1 %}
                                 <a href="{{ path('app_desistement_sortie', {'id': sortie.id}) }}">Se désister</a>
                             {% endif %}
-                            {% if participant is not same as (app.user) %}
-                                <a href="#">S'inscrire</a>
-                            {% endif %}
-                        {% endfor %}
+                         {% endfor %}
+
+                        {% if compteurParticipantInscrit == 0 %}
+                            <a  href="{{ path('app_inscription_sortie', {'id': sortie.id}) }}">S'inscrire</a>
+                        {% endif %}
 
 
                         {% if sortie.organisateur is same as app.user %}

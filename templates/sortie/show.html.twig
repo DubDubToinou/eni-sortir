@@ -69,7 +69,7 @@
             <a href="{{ path('app_inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>
         {% endif %}
 
-    <a href="{{ path('app_sortie_index') }}">Retour à la liste des sorties</a>
+    <a href="{{ path('app_main_connecte') }}">Retour à la liste des sorties</a>
 
     {% if sortie.organisateur is same as (app.user) %}
         <a href="{{ path('app_sortie_edit', {'id':sortie.id}) }}">Modifier</a>
