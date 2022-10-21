@@ -74,12 +74,12 @@
                         {% if sortie.organisateur is same as app.user and sortie.etat.id == 1 %}
                             <a href="#">Publier</a>
                         {% endif %}
-
-
                     </td>
                 </tr>
             {% endfor %}
         </table>
+
+        <a href="{{ path('app_sortie_new') }}">Créer une sortie</a>
 
     </div>
 
