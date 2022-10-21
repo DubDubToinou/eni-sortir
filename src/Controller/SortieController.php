@@ -91,15 +91,22 @@ class SortieController extends AbstractController
     }
 
     #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET', 'POST'])]
-    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository,SortieRepository $sR, Sortie $inscrits):Response
     {
         $participant = $this->getUser();
-        $sortie=$sortieRepository->find($id);
+        $sortie = $sortieRepository->find($id);
+        $inscrits = $sortie->getParticipants();
+        foreach ( $inscrits as $inscrit){
+            if ($participant === $inscrit) {
+                $this->addFlash('text', 'Mais?! Vous êtes déjà inscrit! Peut être un peu Teubé? Cordialement, le Développeur.');
+                return $this->redirectToRoute('app_sortie_show',['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+                break;
+            }
+        }
+        $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
         $sortie->addParticipant($participant);
-            $sortieRepository->save($sortie,true);
-            $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
-
-        return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+        $sortieRepository->save($sortie, true);
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/desistement/{id}', name:'app_desistement_sortie', methods: ['GET', 'POST'])]
@@ -109,7 +116,7 @@ class SortieController extends AbstractController
         $sortie=$sortieRepository->find($id);
         $sortie->removeParticipant($participant);
         $sortieRepository->save($sortie,true);
-        $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+        $this->addFlash('text', 'Vous vous êtes désisté.');
 
         return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
     }

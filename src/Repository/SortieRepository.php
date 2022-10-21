@@ -56,10 +56,10 @@ class SortieRepository extends ServiceEntityRepository
 
     public function listeSortieAvecParticipant($id)
     {
-        $qb = $this->createQueryBuilder('s');
-        $qb->leftJoin('s.participants', 'participants')
-            ->addSelect('participants');
-        $qb->where('s.id = :id')
+        $qb = $this->createQueryBuilder('s')
+            ->select('s', 'p')
+        ->join('s.participants', 'p')
+        ->andWhere('s.id = :id')
             ->setParameter(':id', $id);
 
         return $qb->getQuery()->getResult();
