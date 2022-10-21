@@ -38,6 +38,7 @@
 
         <table>
             <tr>
+                <th>id</th>
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
                 <th>Clôture Inscription</th>
@@ -49,19 +50,21 @@
             </tr>
             {% for sortie in sorties %}
                 <tr id="contenu">
+                    <td>{{ sortie.id }}</td>
                     <td>{{ sortie.nom }}</td>
                     <td>{{ sortie.dateHeureDebut|date('d/m/Y à H:m') }}</td>
                     <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
                     <td>{{ sortie.participants.count ~ ' / ' ~sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.etat.libelle }}</td>
                     <td>
-                        {% if sortie.participants is same as (app.user) %}
+                        {% if sortie.participants is same as sortie %}
                             X
                         {% endif %}
                     </td>
                     <td>{{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom }}</td>
                     <td>
-                        <a href="#">Afficher</a>
+                        <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+
                         <a href="#">S'inscrire</a>
                         <a href="#">Se désister</a>
                         {% if sortie.organisateur is same as app.user %}
