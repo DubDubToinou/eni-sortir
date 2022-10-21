@@ -5,7 +5,7 @@
 {% block body %}
 
     <h4>Date du jour : {{ 'now'|date('d-m-Y') }}</h4>
-    <h5>Connecté : {{ participant.nom|upper ~ ' ' ~ participant.prenom }}</h5>
+    <h5>Connecté : {{ utilisateur.nom|upper ~ ' ' ~ utilisateur.prenom }}</h5>
     <div>
         <h3>Filtrer les sorties</h3>
         <label for="campus">Campus:</label>
@@ -41,24 +41,41 @@
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
                 <th>Clôture Inscription</th>
-                <th>Inscrits/Places</th>
+                <th>Inscrits</th>
                 <th>Etat</th>
                 <th>Inscrit</th>
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
-            {% for sortie in sorties%}
-            <tr id="contenu">
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateHeureDebut|date('d-m-Y à H:m') }}</td>
-                <td>{{ sortie.dateLimiteInscription|date('d-m-Y à H:m') }}</td>
-                <td>{{ sortie.participants.count ~ ' / ' ~sortie.nbInscriptionsMax}}Inscrits/Places</td>
-                <td>{{ sortie.etat.libelle }}</td>
+            {% for sortie in sorties %}
+                <tr id="contenu">
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut|date('d/m/Y à H:m') }}</td>
+                    <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
+                    <td>{{ sortie.participants.count ~ ' / ' ~sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>
+                        {% if sortie.participants is same as (app.user) %}
+                            X
+                        {% endif %}
+                    </td>
+                    <td>{{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom }}</td>
+                    <td>
+                        <a href="#">Afficher</a>
+                        <a href="#">S'inscrire</a>
+                        <a href="#">Se désister</a>
+                        {% if sortie.organisateur is same as app.user %}
+                            <a href="#">Modifier</a>
+                            <a href="#">Annuler</a>
+                        {% endif %}
+                        {% if sortie.organisateur is same as app.user and sortie.etat.id == 1 %}
+                            <a href="#">Publier</a>
+                        {% endif %}
 
-                <td></td>
-                <td>Organisateur</td>
-                <td>Actions</td>
-            </tr>{% endfor %}
+
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
 
     </div>

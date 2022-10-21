@@ -28,14 +28,13 @@ class MainController extends AbstractController
     #[Route('/index', name: 'app_main_connecte')]
     public function indexConnecte(ParticipantRepository $participantRepository, CampusRepository $campusRepository, SortieRepository $sortieRepository): Response
     {
-
-        $participant = $participantRepository->find($this->getUser());
+        $utilisateur = $this->getUser();
+        $participant = $participantRepository->findAll();
         $campus = $campusRepository->findAll();
-        $sortie = $sortieRepository->rechercher($this->getUser());
-        dump($sortie);
-        dump($participant);
+        $sortie = $sortieRepository->findAll();
 
         return $this->render('main/indexConnecte.html.twig', [
+            'utilisateur' =>$utilisateur,
             'participant' => $participant,
             'campuses'=>$campus,
             'sorties'=>$sortie

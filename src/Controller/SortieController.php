@@ -57,7 +57,6 @@ class SortieController extends AbstractController
     #[Route('/{id}', name: 'app_sortie_show', methods: ['GET'])]
     public function show(Sortie $sortie): Response
     {
-        dump($sortie);
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
         ]);
