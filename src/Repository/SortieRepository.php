@@ -52,6 +52,8 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    //QUERY BUILDER pour affichage d'une sortie avec les participants.
+
     public function listeSortieAvecParticipant($id)
     {
         $qb = $this->createQueryBuilder('s')
@@ -63,6 +65,62 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
 
     }
+
+    public function rechercher($id, $mots = null , $campus = null, $organisateur = false,
+                           $inscrit = false, $pasInscrit = false, $dejaPasse = false,
+                           $dateHeureDebut = null, $dateLimiteInscription = null
+    )
+    {
+        $query = $this->createQueryBuilder('s');
+
+        if ($mots != null){
+            $query->where('MATCH_AGAINST(s.nom, s.infosSortie) AGAINST (:mots boolean)>0')->setParameter('mots', $mots);
+        }
+
+        if ($campus != null)
+        {
+            $query->leftJoin('s.campus', 'c');
+            $query->andWhere('c.id = :id')->setParameter('id', $campus);
+        }
+
+        if ($organisateur)
+        {
+            $query->andWhere('s.organisateur = :id')->setParameter('id', $id);
+        }
+
+        if ($inscrit)
+        {
+            $query->innerJoin('s.participants', 'p');
+            $query->andWhere('p.id = :id')          ->setParameter('id', $id);
+        }
+
+        if ($pasInscrit)
+        {
+            $query->innerJoin('s.participants', 'p');
+            $query->andWhere('p.id != :id')->setParameter('id', $id);
+        }
+
+        if ($dejaPasse)
+        {
+            $query->andWhere('s.etat = 8 ');
+        }
+
+        if ($dateHeureDebut != null)
+        {
+            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')->setParameter('dateHeureDebut',  $dateHeureDebut);
+            $query->orderBy('s.dateHeureDebut', 'ASC');
+        }
+
+        if ($dateLimiteInscription != null)
+        {
+            $query->andWhere('s.dateLimiteInscription > :dateLimiteInscription')
+                ->setParameter('dateLimiteInscription', $dateLimiteInscription);
+            $query->orderBy('s.dateHeureDebut', 'ASC');
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects

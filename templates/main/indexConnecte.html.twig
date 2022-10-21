@@ -5,7 +5,7 @@
 {% block body %}
 
     <h4>Date du jour : {{ 'now'|date('d-m-Y') }}</h4>
-    <h5>Connecté : {{ participant.nom|upper ~ ' ' ~ participant.prenom }}</h5>
+    <h5>Connecté : {{ utilisateur.nom|upper ~ ' ' ~ utilisateur.prenom }}</h5>
     <div>
         <h3>Filtrer les sorties</h3>
         <label for="campus">Campus:</label>
@@ -38,51 +38,52 @@
 
         <table>
             <tr>
+                <th>id</th>
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
                 <th>Clôture Inscription</th>
-                <th>Inscrits/Places</th>
+                <th>Inscrits</th>
                 <th>Etat</th>
                 <th>Inscrit</th>
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
-            <tr id="contenu">
-            </tr>
+            {% for sortie in sorties %}
+                <tr id="contenu">
+                    <td>{{ sortie.id }}</td>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut|date('d/m/Y à H:m') }}</td>
+                    <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
+                    <td>{{ sortie.participants.count ~ ' / ' ~sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>
+                        {% for participant in sortie.participants%}
+                            {% if participant is same as (app.user) %}
+                                X
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom }}</td>
+                    <td>
+                        <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+
+                        <a href="#">S'inscrire</a>
+                        <a href="#">Se désister</a>
+                        {% if sortie.organisateur is same as app.user %}
+                            <a href="#">Modifier</a>
+                            <a href="#">Annuler</a>
+                        {% endif %}
+                        {% if sortie.organisateur is same as app.user and sortie.etat.id == 1 %}
+                            <a href="#">Publier</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
+
+        <a href="{{ path('app_sortie_new') }}">Créer une sortie</a>
 
     </div>
 
-    <script>
-        window.onload = () =>{
-            const campus = document.querySelector("#campus");
-            campus.addEventListener("change", ()=> {
-                generationListe(campus.value);
-            })
-
-            function generationListe(campus){
-                fetch('{{ app.request.basePath }}/api/sortie/' + campus,
-                    {
-                        method: "GET",
-                        header: { 'Accept' : 'application/json'}
-                    }
-                ).then(response=>response.json())
-                    .then(response =>{
-                        let td = ""
-
-                        response.map(sortie =>{
-                            td += `<td>${sortie.nom}</td>`
-                            td += `<td>${sortie.dateHeureDebut}</td>`
-                            td += `<td>${sortie.dateLimiteInscription}</td>`
-                            td += `<td>${sortie.nbInscriptionsMax}</td>`
-                            td += `<td>${sortie.etat.libelle}</td>`
-                            td += `<td>${sortie.participants}</td>`
-                            td += `<td>${sortie.organisateur.nom + ' ' +sortie.organisateur.prenom}</td>`
-                            })
-                        document.querySelector("#contenu").innerHTML = td
-                    })
-            }
-        }
-    </script>
 
 {% endblock %}

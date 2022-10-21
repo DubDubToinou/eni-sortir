@@ -5,11 +5,11 @@
 {% block body %}
     <h1>Sortie {{ sortie.nom ~ ' le : ' ~ sortie.dateHeureDebut|date('d-m-Y H:i:s') }}</h1>
     <h2>Fin des inscriptions le : {{ sortie.dateLimiteInscription|date('d-m-Y H:i:s') }}</h2>
-    <h3>Organisé par : {{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom ~ ' du campus : ' ~ sortie.campus.nom}}</h3>
+  <h3>Organisé par : {{ sortie.organisateur.nom|upper ~ ' ' ~ sortie.organisateur.prenom ~ ' du campus : ' ~ sortie.campus.nom}}</h3>
 
     <table class="table">
         <tbody>
-       <tr>
+        <tr>
             <th>Nom</th>
             <td>{{ sortie.nom }}</td>
         </tr>
@@ -30,7 +30,7 @@
             <td>{{ sortie.infosSortie }}</td>
         </tr>
         <tr>
-            <th>Campus</th>
+             <th>Campus</th>
             <td>{{ sortie.campus.nom }}</td>
         </tr>
         <tr>

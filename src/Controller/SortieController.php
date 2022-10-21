@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
-use App\Repository\VilleRepository;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,14 +32,17 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
-        /** @var Participant $user */
-        $user = $this->getUser();
-
-        $sortie->setCampus($user->getCampus());
+        $sortie->setCampus($this->getUser()->getCampus());
         $sortie->setOrganisateur($this->getUser());
-        $sortie->setEtat($etatRepository->find(1));
+        $sortie->addParticipant($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('publish')->isClicked()) {
+                $sortie->setEtat($etatRepository->find(2));
+            } else {
+                $sortie->setEtat($etatRepository->find(1));
+            }
+
             $sortieRepository->save($sortie, true);
 
             return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
@@ -89,6 +89,7 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET', 'POST'])]
     public function inscriptionSortie(int $id, SortieRepository $sortieRepository,SortieRepository $sR, Sortie $inscrits):Response
     {
@@ -108,6 +109,7 @@ class SortieController extends AbstractController
         }
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/desistement/{id}', name:'app_desistement_sortie', methods: ['GET', 'POST'])]
     public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
     {

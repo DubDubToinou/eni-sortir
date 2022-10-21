@@ -76,6 +76,16 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
     }
 
 
+    public function participantParSortie($id)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.sortieInscrit = :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
 //    /**
 //     * @return Participant[] Returns an array of Participant objects
 //     */

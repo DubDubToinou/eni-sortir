@@ -25,14 +25,17 @@ class Sortie
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups('listeSortie:read')]
+    #[Assert\GreaterThan('today')]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     #[Groups('listeSortie:read')]
+    #[Assert\GreaterThan('1970-01-01 00:30:00')]
     private ?\DateTimeInterface $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups('listeSortie:read')]
+    #[Assert\LessThan(propertyPath:'dateHeureDebut')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
