@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -51,6 +52,9 @@ class SortieType extends AbstractType
                 'choice_label' => 'nom',
                 'mapped' => false,
                 'required' => false
+            ])
+            ->add('publish', SubmitType::class, [
+                'label' => 'Publier',
             ]);
 
         $builder->get('ville')->addEventListener(

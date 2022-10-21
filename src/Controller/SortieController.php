@@ -35,9 +35,14 @@ class SortieController extends AbstractController
         $sortie->setCampus($this->getUser()->getCampus());
         $sortie->setOrganisateur($this->getUser());
         $sortie->addParticipant($this->getUser());
-        $sortie->setEtat($etatRepository->find(1));
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('publish')->isClicked()) {
+                $sortie->setEtat($etatRepository->find(2));
+            } else {
+                $sortie->setEtat($etatRepository->find(1));
+            }
+
             $sortieRepository->save($sortie, true);
 
             return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
