@@ -47,9 +47,18 @@
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
+            {% for sortie in sorties%}
             <tr id="contenu">
-                <td>{{  }}</td>
-            </tr>
+                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.dateHeureDebut|date('d-m-Y à H:m') }}</td>
+                <td>{{ sortie.dateLimiteInscription|date('d-m-Y à H:m') }}</td>
+                <td>{{ sortie.participants.count ~ ' / ' ~sortie.nbInscriptionsMax}}Inscrits/Places</td>
+                <td>{{ sortie.etat.libelle }}</td>
+
+                <td></td>
+                <td>Organisateur</td>
+                <td>Actions</td>
+            </tr>{% endfor %}
         </table>
 
     </div>
