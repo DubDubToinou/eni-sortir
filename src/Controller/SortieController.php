@@ -89,6 +89,7 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET', 'POST'])]
     public function inscriptionSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
     {
@@ -100,6 +101,7 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/desistement/{id}', name:'app_desistement_sortie', methods: ['GET', 'POST'])]
     public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
     {
