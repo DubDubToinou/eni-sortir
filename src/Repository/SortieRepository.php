@@ -52,6 +52,8 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    //QUERY BUILDER pour affichage d'une sortie avec les participants.
+
     public function listeSortieAvecParticipant($id)
     {
         $qb = $this->createQueryBuilder('s');
@@ -63,6 +65,9 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
 
     }
+
+
+
 
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects
