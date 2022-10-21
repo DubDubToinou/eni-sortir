@@ -90,15 +90,23 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET', 'POST'])]
-    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository,SortieRepository $sR, Sortie $inscrits):Response
     {
         $participant = $this->getUser();
-        $sortie=$sortieRepository->find($id);
+        $sortie = $sortieRepository->find($id);
         $sortie->addParticipant($participant);
-            $sortieRepository->save($sortie,true);
-            $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+        $sortieRepository->save($sortie, true);
 
-        return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+        foreach ($inscrits = $sR->listeSortieAvecParticipants($id) as $item){
+            if ($participant === $item) {
+                $this->addFlash('text', 'Mais?! Vous êtes déjà inscrit! Peut être un peu Teubé? Cordialement, le Développeur.');
+                return $this->redirectToRoute('app_sortie_show');
+
+            } else {
+                $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+            }
+        }
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
     #[Route('/desistement/{id}', name:'app_desistement_sortie', methods: ['GET', 'POST'])]
     public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
@@ -107,7 +115,7 @@ class SortieController extends AbstractController
         $sortie=$sortieRepository->find($id);
         $sortie->removeParticipant($participant);
         $sortieRepository->save($sortie,true);
-        $this->addFlash('text', 'Il reste de la place, vous pouvez vous inscrire.');
+        $this->addFlash('text', 'Vous vous êtes désisté.');
 
         return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
     }
