@@ -112,6 +112,15 @@ class AdminController extends AbstractController
         ]);
 
     }
+    #[Route('/attributionadmin/{id}', name:'admin_attribution_role', methods: ['GET', 'POST'])]
+    public function attribution(int $id, ParticipantRepository $participantRepository)
+    {
+        $nouvelAdmin = $participantRepository->find($id);
+        $nouvelAdmin->setRoles(roles: (array)'ROLE_ADMIN');
+        $participantRepository->save($nouvelAdmin, true);
+        $this->addFlash("success", 'L\'opération s\'est bien passé');
+        return $this->redirectToRoute('admin_gerer_utilisateur', ['id' => $nouvelAdmin->getId()], Response::HTTP_SEE_OTHER);
+    }
 
 
 
