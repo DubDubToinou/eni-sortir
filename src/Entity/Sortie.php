@@ -11,8 +11,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
+#[ORM\Index(columns: ['nom', 'infos_sortie'], name: 'sortie', flags: ['fulltext'])]
+
+
 class Sortie
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
