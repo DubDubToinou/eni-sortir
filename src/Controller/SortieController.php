@@ -156,4 +156,14 @@ class SortieController extends AbstractController
 
     return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}', name:'app_sortie_publier', methods:'POST')]
+    public function publier (int $id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository)
+    {
+        $participant=$this->getUser();
+        $sortie=$sortieRepository->find($id);
+        $sortie->setEtat($etatRepository->find(2));
+        $sortieRepository->save($sortie, true);
+        $this->addFlash('succes', 'Sortie Publiée et ouverte aux inscriptions.');
+        return $this->$sortie;
+    }
 }
