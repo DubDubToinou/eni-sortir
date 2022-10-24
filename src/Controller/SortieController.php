@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\AnnulationFormType;
+use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use phpDocumentor\Reflection\Types\String_;
@@ -30,7 +32,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository, VilleRepository $villeRepository): Response
+    public function new(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository, LieuRepository $lieuRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -42,12 +44,12 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($this->getUser());
         $sortie->addParticipant($this->getUser());
 
-        $ville = new Ville();
-        $villeForm = $this->createForm(VilleType::class, $ville);
-        $villeForm->handleRequest($request);
+        $lieu = new Ville();
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+        $lieuForm->handleRequest($request);
 
-        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
-            $villeRepository->save($ville, true);
+        if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
+            $lieuRepository->save($lieu, true);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +65,7 @@ class SortieController extends AbstractController
         }
 
         return $this->renderForm('sortie/new.html.twig', [
-            'villeForm' => $villeForm,
+            'lieuForm' => $lieuForm,
             'sortie' => $sortie,
             'form' => $form,
         ]);
