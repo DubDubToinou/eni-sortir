@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\AnnulationFormType;
 use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Role\Role;
 
 
 #[Route('/sortie')]
@@ -131,5 +134,26 @@ class SortieController extends AbstractController
         $this->addFlash('success', 'Vous vous êtes désister.');
 
         return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/annulation/{id}', name: 'app_sortie_annulation', methods: ['GET', 'POST'])]
+    public function annulation(int $id, Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
+    {
+        $form = $this->createForm(AnnulationFormType::class, $sortie);
+        $form->handleRequest($request);
+
+        $participant = $this->getUser();
+
+        $sortie = $sortieRepository->find($id);
+
+        $sortie->setMotif('motif');
+        $sortie->setEtat($etatRepository->find(6));
+        $sortieRepository->save($sortie, true);
+        $this->addFlash("succes", "Annulation confimée.");
+        return $this->renderForm('sortie/show.html.twig', [
+            'sortie' => $sortie,
+            'form' => $form,
+        ]);
+
+    return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
     }
 }
