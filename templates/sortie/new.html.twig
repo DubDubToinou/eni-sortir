@@ -1,6 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Organiser{% endblock %}
+{% block script %}
+    <script defer>
+        const close = document.querySelector('.close');
+        const open = document.querySelector('.open');
+
+        function openPopUp() {
+            document.querySelector('.popUp').style.display = "block";
+        }
+
+        function closePopUp() {
+            document.querySelector('.popUp').style.display = "none";
+        }
+    </script>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .popUp {
+            display: none;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
     <h1>Organiser une sortie</h1>
@@ -8,8 +30,19 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <button class="btn" name="save">sauvegarder</button>
+    <button class="btn" name="save">Sauvegarder</button>
     {{ form_end(form) }}
+
+    <button type="button" class="open" onclick="openPopUp()">Ajouter une ville</button>
+
+    <div class="popUp">
+        {{ form_start(villeForm) }}
+        {{ form_widget(villeForm) }}
+        <button type="submit">Ajouter</button>
+        {{ form_end(villeForm) }}
+        <button type="button" class="close" onclick="closePopUp()">Annuler</button>
+    </div>
 
     <a href="{{ path('app_main') }}">Annuler</a>
 {% endblock %}
+

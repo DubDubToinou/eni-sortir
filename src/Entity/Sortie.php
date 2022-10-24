@@ -25,17 +25,17 @@ class Sortie
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups('listeSortie:read')]
-    #[Assert\GreaterThan('today')]
+    #[Assert\GreaterThan('today', message: 'Veuillez choisir une date à partir de demain')]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     #[Groups('listeSortie:read')]
-    #[Assert\GreaterThan('1970-01-01 00:30:00')]
+    #[Assert\GreaterThan('1970-01-01 00:30:00', message: 'La durée d\'une sortie doit être d\'au moins 30 minutes')]
     private ?\DateTimeInterface $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups('listeSortie:read')]
-    #[Assert\LessThan(propertyPath:'dateHeureDebut')]
+    #[Assert\LessThan(propertyPath:'dateHeureDebut', message: 'Les inscriptions doivent se terminer avant le début de la sortie')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
@@ -64,7 +64,7 @@ class Sortie
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups('listeSortie:read')]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Veuillez choisir un lieu')]
     private ?Lieu $lieu = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]

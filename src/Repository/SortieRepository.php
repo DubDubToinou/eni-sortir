@@ -66,7 +66,7 @@ class SortieRepository extends ServiceEntityRepository
 
     }
 
-    public function rechercher($id, $mots = null , $campus = null, $organisateur = false,
+    public function rechercher($id, $mots = null , $rechercheCampus = null, $organisateur = false,
                            $inscrit = false, $pasInscrit = false, $dejaPasse = false,
                            $dateHeureDebut = null, $dateLimiteInscription = null
     )
@@ -77,10 +77,10 @@ class SortieRepository extends ServiceEntityRepository
             $query->where('MATCH_AGAINST(s.nom, s.infosSortie) AGAINST (:mots boolean)>0')->setParameter('mots', $mots);
         }
 
-        if ($campus != null)
+        if ($rechercheCampus != null)
         {
             $query->leftJoin('s.campus', 'c');
-            $query->andWhere('c.id = :id')->setParameter('id', $campus);
+            $query->andWhere('c.id = :id')->setParameter('id', $rechercheCampus);
         }
 
         if ($organisateur)
@@ -91,13 +91,15 @@ class SortieRepository extends ServiceEntityRepository
         if ($inscrit)
         {
             $query->innerJoin('s.participants', 'p');
-            $query->andWhere('p.id = :id')          ->setParameter('id', $id);
+            $query->andWhere('p.id = :id')
+                ->setParameter('id', $id);
         }
 
         if ($pasInscrit)
         {
             $query->innerJoin('s.participants', 'p');
-            $query->andWhere('p.id != :id')->setParameter('id', $id);
+            $query->andWhere('p.id != :id')
+                ->setParameter('id', $id);
         }
 
         if ($dejaPasse)
