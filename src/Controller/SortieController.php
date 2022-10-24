@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\AnnulationFormType;
@@ -44,7 +45,7 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($this->getUser());
         $sortie->addParticipant($this->getUser());
 
-        $lieu = new Ville();
+        $lieu = new Lieu();
         $lieuForm = $this->createForm(LieuType::class, $lieu);
         $lieuForm->handleRequest($request);
 

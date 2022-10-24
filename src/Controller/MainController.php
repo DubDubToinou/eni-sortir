@@ -30,7 +30,7 @@ class MainController extends AbstractController
     {
 
         $campus = $campusRepository->findAll();
-        $sortie = $sortieRepository->findAll();
+        $sortie = $sortieRepository->listeDesSortie();
         $utilisateur = $this->getUser();
 
         $formulaireRecherche = $this->createForm(RechercherType::class);

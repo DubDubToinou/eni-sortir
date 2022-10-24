@@ -66,6 +66,18 @@ class SortieRepository extends ServiceEntityRepository
 
     }
 
+
+    public function listeDesSortie(){
+        $qb = $this->createQueryBuilder('s')
+            ->select('s','p','e')
+            ->leftJoin('s.participants', 'p')
+            ->leftJoin('s.etat', 'e');
+
+
+            return $qb->getQuery()->getResult();
+    }
+
+
     public function rechercher($id, $mots = null, $rechercheCampus = null, $organisateur = false,
                                $inscrit = false, $pasInscrit = false, $dejaPasse = false,
                                $dateHeureDebut = null, $dateLimiteInscription = null
@@ -93,7 +105,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if ($pasInscrit) {
-            $query->innerJoin('s.participants', 'p');
+            $query->join('s.participants', 'p');
             $query->andWhere('p.id != :id')->setParameter('id', $id);
         }
 
@@ -102,15 +114,15 @@ class SortieRepository extends ServiceEntityRepository
             $query->andWhere('s.etat = 5 ');
         }
 
-        if ($dateHeureDebut != null) {
-            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')
-                ->setParameter('dateHeureDebut', $dateHeureDebut);
+        if ($dateLimiteInscription != null) {
+            $query->andWhere('s.dateHeureDebut < :dateHeureDebut')
+                ->setParameter('dateHeureDebut', $dateLimiteInscription);
             $query->orderBy('s.dateHeureDebut', 'ASC');
         }
 
-        if ($dateLimiteInscription != null) {
+        if ($dateHeureDebut != null) {
             $query->andWhere('s.dateLimiteInscription > :dateLimiteInscription')
-                ->setParameter('dateLimiteInscription', $dateLimiteInscription);
+                ->setParameter('dateLimiteInscription', $dateHeureDebut);
             $query->orderBy('s.dateHeureDebut', 'ASC');
         }
 
