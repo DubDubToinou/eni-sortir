@@ -7,8 +7,8 @@ Use Doctrine\ORM\Mapping as ORM;
 class Rechercher
 {
 
-    public $mots;
     public $rechercheCampus;
+    public $mots;
     public $organisateur;
     public $inscrit;
     public $pasInscrit;

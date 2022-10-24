@@ -8,6 +8,13 @@
     <h5>Connecté : {{ utilisateur.nom|upper ~ ' ' ~ utilisateur.prenom }}</h5>
     <div>
         <h3>Filtrer les sorties</h3>
+
+        {{ form_start(form)}}
+        {{ form_widget(form)}}
+        <button type="submit">Rechercher</button>
+        {{ form_end(form) }}
+
+        {#
         <label for="campus">Campus:</label>
         <select id="campus">
             {% for campus in campuses %}
@@ -15,7 +22,7 @@
             {% endfor %}
         </select>
 
-        <label for="rechercher">le nom de la sortie contient :</label>
+         <label for="rechercher">le nom de la sortie contient :</label>
         <input type="search" id="rechercher">
 
         <label for="dateDebut">Entre</label>
@@ -34,7 +41,7 @@
         <input type="checkbox" id="sortiePasInscrit" name="sortiePasInscrit">
 
         <label for="sortiePassee">Sortie passées</label>
-        <input type="checkbox" id="sortiePassee" name="sortiePassee">
+        <input type="checkbox" id="sortiePassee" name="sortiePassee">#}
 
         <table>
             <tr>

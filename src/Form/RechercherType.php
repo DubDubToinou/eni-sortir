@@ -11,7 +11,14 @@ class RechercherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('field_name')
+            ->add('rechercheCampus')
+            ->add('mots')
+            ->add('dateDebut')
+            ->add('dateFin')
+            ->add('organisateur')
+            ->add('inscrit')
+            ->add('pasInscrit')
+            ->add('passée')
         ;
     }
 
