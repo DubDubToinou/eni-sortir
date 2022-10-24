@@ -37,24 +37,22 @@ class EtatService
 
             $dateFinSortie = $sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree()->getTimestamp();
 
+
             if ($dateFinSortie <= $dateArchive->getTimestamp()) {
                 $sortie->setEtat($etatRepository->find(7));
                 $entityManager->persist($sortie);
 
             } elseif ($dateFinSortie <= $dateDuJour->getTimestamp()) {
+
                 $sortie->setEtat($etatRepository->find(5));
                 $entityManager->persist($sortie);
-            } elseif ($sortie->getEtat()->getId() != 1
-                && $sortie->getEtat()->getId() != 2
-                && $sortie->getEtat()->getId() != 3
-                && $sortie->getEtat()->getId() != 5
-                && $sortie->getEtat()->getId() != 6
-                && $sortie->getEtat()->getId() != 7
-            ) {
+
+            } elseif ($dateDuJour->getTimestamp() > $sortie->getDateHeureDebut()->getTimestamp() && $dateDuJour->getTimestamp() < $dateFinSortie) {
                 $sortie->setEtat($etatRepository->find(4));
                 $entityManager->persist($sortie);
             }
             $entityManager->flush();
         }
+
     }
 }
