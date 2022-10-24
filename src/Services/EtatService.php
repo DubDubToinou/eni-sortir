@@ -43,14 +43,14 @@ class EtatService
                 $entityManager->persist($sortie);
 
             } elseif ($dateFinSortie <= $dateDuJour->getTimestamp()) {
-
                 $sortie->setEtat($etatRepository->find(5));
                 $entityManager->persist($sortie);
 
-            } elseif ($dateDuJour->getTimestamp() > $sortie->getDateHeureDebut()->getTimestamp() && $dateDuJour->getTimestamp() < $dateFinSortie) {
-                $sortie->setEtat($etatRepository->find(4));
+            }elseif($sortie->getDateLimiteInscription()->getTimestamp() <= $dateDuJour->getTimestamp()){
+                $sortie->setEtat($etatRepository->find(3));
                 $entityManager->persist($sortie);
             }
+
 
             if($sortie->getParticipants()->count() == $sortie->getNbInscriptionsMax()){
                 $sortie->setEtat($etatRepository->find(3));
@@ -60,8 +60,8 @@ class EtatService
                 $entityManager->persist($sortie);
             }
 
-            $entityManager->flush();
-        }
 
+        }
+        $entityManager->flush();
     }
 }
