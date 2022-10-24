@@ -136,12 +136,14 @@ class SortieController extends AbstractController
     }
 
     #[Route('/desistement/{id}', name: 'app_desistement_sortie', methods: ['GET', 'POST'])]
-    public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie): Response
+    public function desistementSortie(int $id, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $participant = $this->getUser();
         $sortie = $sortieRepository->find($id);
         $sortie->removeParticipant($participant);
-
+        if ($sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()){
+            $sortie->setEtat($etatRepository->find(2));
+        }
 
         $sortieRepository->save($sortie, true);
         $this->addFlash('success', 'Vous vous êtes désister.');

@@ -51,6 +51,15 @@ class EtatService
                 $sortie->setEtat($etatRepository->find(4));
                 $entityManager->persist($sortie);
             }
+
+            if($sortie->getParticipants()->count() == $sortie->getNbInscriptionsMax()){
+                $sortie->setEtat($etatRepository->find(3));
+                $entityManager->persist($sortie);
+            }elseif($sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()){
+                $sortie->setEtat($etatRepository->find(2));
+                $entityManager->persist($sortie);
+            }
+
             $entityManager->flush();
         }
 
