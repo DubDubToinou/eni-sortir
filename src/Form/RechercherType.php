@@ -18,7 +18,7 @@ class RechercherType extends AbstractType
         $builder
             ->add('rechercheCampus', EntityType::class,[
                 'label'=>'Campus',
-                'class'=>Campus::class,
+                'class'=> Campus::class,
                 'choice_label'=>'nom',
                 'required'=>false])
 
@@ -26,32 +26,37 @@ class RechercherType extends AbstractType
                 'label'=>'Le nom contient',
                 'required'=>false,
             ])
+
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label'=>'Entre',
                 'required'=>false,
-                'html5'=>true,
             ])
+
             ->add('dateLimiteInscription', DateTimeType::class,[
                 'label'=>'et',
                 'required'=>false,
-                'html5'=>true,
             ])
+
             ->add('organisateur', CheckboxType::class, [
                 'label'=>'Sortie dont je suis l\'organisateur/trice',
                 'required'=>false,
             ])
+
             ->add('inscrit',CheckboxType::class, [
                 'label'=>'Sorties auxquelles je suis inscrit',
                 'required'=>false,
             ])
+
             ->add('pasInscrit',CheckboxType::class, [
                 'label'=>'Sorties auxquelles je ne  suis pas inscrit(e)',
                 'required'=>false,
-            ] )
-            ->add('degaPasse', CheckboxType::class, [
+            ])
+
+
+            ->add('dejaPasse', CheckboxType::class, [
                 'label'=>'Sortie passées',
                 'required'=>false,
-    ] )
+            ])
         ;
     }
 

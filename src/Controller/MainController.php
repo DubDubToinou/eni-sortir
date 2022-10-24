@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\DTO\Rechercher;
-use App\Entity\Participant;
 use App\Form\RechercherType;
 use App\Repository\CampusRepository;
 use App\Repository\ParticipantRepository;
@@ -33,36 +31,35 @@ class MainController extends AbstractController
 
         $campus = $campusRepository->findAll();
         $sortie = $sortieRepository->findAll();
-        $formulaireRecherche = $this->createForm(RechercherType::class);
         $utilisateur = $this->getUser();
+
+        $formulaireRecherche = $this->createForm(RechercherType::class);
         $formulaireRecherche->handleRequest($request);
 
         if($formulaireRecherche->isSubmitted() && $formulaireRecherche->isValid()){
-            $utilisateur = $participantRepository->find($this->getUser());
+            $utilisateurConnecte = $participantRepository->find($this->getUser());
 
-            $mots = $formulaireRecherche->get('mots')->getData();
             $rechercheCampus = $formulaireRecherche->get('rechercheCampus')->getData();
+            $mots = $formulaireRecherche->get('mots')->getData();
+            $dateDebut = $formulaireRecherche->get('dateHeureDebut')->getData();
+            $dateFin = $formulaireRecherche->get('dateLimiteInscription')->getData();
             $organisateur = $formulaireRecherche->get('organisateur')->getData();
             $inscrit = $formulaireRecherche->get('inscrit')->getData();
             $pasInscrit = $formulaireRecherche->get('pasInscrit')->getData();
             $dejaPasse = $formulaireRecherche->get('dejaPasse')->getData();
-            $dateDebut = $formulaireRecherche->get('dateHeureDebut')->getData();
-            $dateFin = $formulaireRecherche->get('dateLimiteInscription')->getData();
 
-            $sortie = $sortieRepository->rechercher($utilisateur->getId(), $mots, $rechercheCampus, $organisateur, $inscrit, $pasInscrit, $dejaPasse, $dateDebut,$dateFin);
 
-            return $this->render('main/indexConnecte.html.twig', [
-                'utilisateur' =>$utilisateur,
+            $sortie = $sortieRepository->rechercher($utilisateurConnecte->getId(), $mots, $rechercheCampus, $organisateur, $inscrit, $pasInscrit, $dejaPasse, $dateDebut, $dateFin);
+
+            return $this->renderForm('main/indexConnecte.html.twig', [
+                'utilisateur' =>$utilisateurConnecte,
                 'campuses'=>$campus,
                 'sorties'=>$sortie,
                 'form'=>$formulaireRecherche,
             ]);
         }
 
-
-        $campus = $campusRepository->findAll();
-
-        return $this->render('main/indexConnecte.html.twig', [
+        return $this->renderForm('main/indexConnecte.html.twig', [
             'utilisateur' =>$utilisateur,
             'campuses'=>$campus,
             'sorties'=>$sortie,
