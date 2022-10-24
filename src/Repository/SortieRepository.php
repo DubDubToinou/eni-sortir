@@ -66,6 +66,17 @@ class SortieRepository extends ServiceEntityRepository
 
     }
 
+
+    public function listeDesSortie(){
+        $qb = $this->createQueryBuilder('s')
+            ->select('s','p','e')
+            ->leftJoin('s.participants', 'p')
+            ->leftJoin('s.etat', 's');
+
+            return $qb->getQuery()->getResult();
+    }
+
+
     public function rechercher($id, $mots = null, $rechercheCampus = null, $organisateur = false,
                                $inscrit = false, $pasInscrit = false, $dejaPasse = false,
                                $dateHeureDebut = null, $dateLimiteInscription = null
