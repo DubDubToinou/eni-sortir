@@ -88,12 +88,12 @@
                         {% endif %}
 
 
-                        {% if sortie.organisateur is same as app.user %}
-                            <a href="#">Modifier</a>
+                        {% if sortie.organisateur is same as app.user or is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">Modifier</a>
                             <a href="{{ path('app_sortie_annulation', {'id': sortie.id}) }}">Annuler</a>
                         {% endif %}
                         {% if sortie.organisateur is same as app.user and sortie.etat.id == 1 %}
-                            <a href="#">Publier</a>
+                            <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}">Publier</a>
                         {% endif %}
                     </td>
                 </tr>

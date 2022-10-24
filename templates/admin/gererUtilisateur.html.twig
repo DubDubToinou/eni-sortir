@@ -36,6 +36,7 @@
                 <td>
                     <a href="{{ path('admin_desactiver_utilisateur', {'id':utilisateurActif.id}) }}"
                        onclick="return confirm('Voulez vous désactiver l\'utilisateur');">Désactiver</a>
+                    <a href="{{ path('#', {'id':utilisateurActif.id}) }}">Attribué le Rôle </a>
                     <a href="{{ path('admin_supprimer_utilisateur', {'id':utilisateurActif.id}) }}"
                          onclick="return confirm('Voulez vous supprimer l\'utilisateur ?');">Supprimer</a>
                 </td>
