@@ -73,7 +73,7 @@
 
     {% if sortie.organisateur is same as (app.user) %}
         <a href="{{ path('app_sortie_edit', {'id':sortie.id}) }}">Modifier</a>
-        <a href="{{ path('app_sortie_annulation') }}">Annulation</a>
+        <a href="{{ path('app_sortie_annulation', {'id':sortie.id}) }}">Annulation</a>
     {% endif %}
 
 {% endblock %}
