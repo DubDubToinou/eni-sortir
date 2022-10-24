@@ -32,14 +32,16 @@ class SortieType extends AbstractType
             ->add('dateHeureDebut', DateTimeType::class, [
                 'html5' => true,
                 'label' => 'Date et heure de début',
-                'placeholder' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour' )
+                'date_format' => 'ddMMyyyy',
+                'placeholder' => array('day' => 'Jour','month' => 'Mois', 'year' => 'Année')
             ])
             ->add('duree', TimeType::class, [
                 'label' => 'Durée éstimée'
             ])
             ->add('dateLimiteInscription', DateTimeType::class, [
                 'label' => 'Date limite d\'inscription',
-                'placeholder' => array('year' => 'Année', 'month' => 'Mois', 'day' => 'Jour' )
+                'date_format' => 'ddMMyyyy',
+                'placeholder' => array('day' => 'Jour','month' => 'Mois', 'year' => 'Année')
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => 'Nombre de places'
