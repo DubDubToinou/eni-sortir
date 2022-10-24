@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/")]
 class MainController extends AbstractController
 {
-    #[Route('', name: 'app_main')]
+     #[Route('', name: 'app_main')]
     public function index(): Response
     {
         //récupération de l'utilisateur en cours.
