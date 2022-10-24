@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Form\SortieType;
+use App\Form\VilleType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +27,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
+    public function new(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository, VilleRepository $villeRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -35,6 +38,14 @@ class SortieController extends AbstractController
         $sortie->setCampus($this->getUser()->getCampus());
         $sortie->setOrganisateur($this->getUser());
         $sortie->addParticipant($this->getUser());
+
+        $ville = new Ville();
+        $villeForm = $this->createForm(VilleType::class, $ville);
+        $villeForm->handleRequest($request);
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()){
+            $villeRepository->save($ville, true);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('publish')->isClicked()) {
@@ -49,6 +60,7 @@ class SortieController extends AbstractController
         }
 
         return $this->renderForm('sortie/new.html.twig', [
+            'villeForm' => $villeForm,
             'sortie' => $sortie,
             'form' => $form,
         ]);
