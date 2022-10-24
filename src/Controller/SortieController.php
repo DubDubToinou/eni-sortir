@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
@@ -109,7 +110,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/inscription/{id}', name: 'app_inscription_sortie', methods: ['GET', 'POST'])]
-    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, SortieRepository $sR, Sortie $inscrits): Response
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, SortieRepository $sR, Sortie $inscrits, EtatRepository $etatRepository): Response
     {
         $participant = $this->getUser();
         $sortie = $sortieRepository->find($id);
@@ -121,8 +122,15 @@ class SortieController extends AbstractController
                 break;
             }
         }
+
+
         $this->addFlash('success', 'Vous vous êtes inscrit');
         $sortie->addParticipant($participant);
+        if ($sortie->getParticipants()->count() == $sortie->getNbInscriptionsMax()) {
+            $sortie->setEtat($etatRepository->find(3));
+        }else{
+            $sortie->setEtat($etatRepository->find(2));
+        }
         $sortieRepository->save($sortie, true);
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
@@ -133,6 +141,8 @@ class SortieController extends AbstractController
         $participant = $this->getUser();
         $sortie = $sortieRepository->find($id);
         $sortie->removeParticipant($participant);
+
+
         $sortieRepository->save($sortie, true);
         $this->addFlash('success', 'Vous vous êtes désister.');
 
@@ -160,7 +170,7 @@ class SortieController extends AbstractController
             'form' => $form,]);
     }
 
-    #[Route('/publier/{id}', name: 'app_sortie_publier', methods: ['GET','POST'])]
+    #[Route('/publier/{id}', name: 'app_sortie_publier', methods: ['GET', 'POST'])]
     public function publier(int $id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository)
     {
         $participant = $this->getUser();
