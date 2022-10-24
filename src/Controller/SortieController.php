@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Form\AnnulationFormType;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Role\Role;
 
 
 #[Route('/sortie')]
@@ -119,5 +121,25 @@ class SortieController extends AbstractController
         $this->addFlash('success', 'Vous vous êtes désister.');
 
         return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/annulation/{id}', name: 'app_sortie_annulation', methods: ['GET', 'POST'])]
+    public function annulation(int $id, Request $request, Sortie $sortie, SortieRepository $sortieRepository, $motif, $etat): Response
+    {
+        $form = $this->createForm(AnnulationFormType::class, $sortie);
+        $form->handleRequest($request);
+
+        $participant = $this->getUser();
+        if($participant->getRoles(ROLE_ORGANISATEUR)){
+        $sortie = $sortieRepository->find($id);
+        $sortie->setMotif($motif);
+        $sortie->setEtat($etat);
+        return $this->renderForm('sortie/show.html.twig', [
+            'sortie' => $sortie,
+            'form' => $form,
+        ]);
+
+    }
+    $this->addFlash('string', 'vous n\'êtes pas l\'organisateur de cette sortie. Tocard. Toujours Cordialement, toujours le Développeur.');
+    return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
     }
 }
