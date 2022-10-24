@@ -93,7 +93,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if ($pasInscrit) {
-            $query->innerJoin('s.participants', 'p');
+            $query->join('s.participants', 'p');
             $query->andWhere('p.id != :id')->setParameter('id', $id);
         }
 
@@ -102,15 +102,15 @@ class SortieRepository extends ServiceEntityRepository
             $query->andWhere('s.etat = 5 ');
         }
 
-        if ($dateHeureDebut != null) {
-            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')
-                ->setParameter('dateHeureDebut', $dateHeureDebut);
+        if ($dateLimiteInscription != null) {
+            $query->andWhere('s.dateHeureDebut < :dateHeureDebut')
+                ->setParameter('dateHeureDebut', $dateLimiteInscription);
             $query->orderBy('s.dateHeureDebut', 'ASC');
         }
 
-        if ($dateLimiteInscription != null) {
+        if ($dateHeureDebut != null) {
             $query->andWhere('s.dateLimiteInscription > :dateLimiteInscription')
-                ->setParameter('dateLimiteInscription', $dateLimiteInscription);
+                ->setParameter('dateLimiteInscription', $dateHeureDebut);
             $query->orderBy('s.dateHeureDebut', 'ASC');
         }
 
