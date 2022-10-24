@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Form\RechercherType;
 use App\Repository\CampusRepository;
+use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Services\EtatService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +29,10 @@ class MainController extends AbstractController
     }
 
     #[Route('/index', name: 'app_main_connecte')]
-    public function indexConnecte(Request $request, ParticipantRepository $participantRepository, CampusRepository $campusRepository, SortieRepository $sortieRepository): Response
+    public function indexConnecte(Request $request,EntityManagerInterface $entityManager, EtatService $etatService,EtatRepository $etatRepository, ParticipantRepository $participantRepository, CampusRepository $campusRepository, SortieRepository $sortieRepository): Response
     {
+
+        $etatService->miseAJourDesEtats($etatRepository, $sortieRepository,$entityManager);
 
         $campus = $campusRepository->findAll();
         $sortie = $sortieRepository->listeDesSortie();
