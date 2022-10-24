@@ -2,23 +2,56 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Symfony\Component\Translation\t;
 
 class RechercherType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('rechercheCampus')
-            ->add('mots')
-            ->add('dateDebut')
-            ->add('dateFin')
-            ->add('organisateur')
-            ->add('inscrit')
-            ->add('pasInscrit')
-            ->add('passée')
+            ->add('rechercheCampus', EntityType::class,[
+                'label'=>'Campus',
+                'class'=>Campus::class,
+                'choice_label'=>'nom',
+                'required'=>false])
+            ->add('mots', SearchType::class, [
+                'label'=>'Le nom contient',
+                'required'=>false,
+            ])
+            ->add('dateHeureDebut', DateTimeType::class, [
+                'label'=>'Entre',
+                'required'=>false,
+                'html5'=>true,
+            ])
+            ->add('dateLimiteInscription', DateTimeType::class,[
+                'label'=>'et',
+                'required'=>false,
+                'html5'=>true,
+            ])
+            ->add('organisateur', CheckboxType::class, [
+                'label'=>'Sortie dont je suis l\'organisateur/trice',
+                'require'=>false,
+            ])
+            ->add('inscrit',CheckboxType::class, [
+                'label'=>'Sorties auxquelles je suis inscrit',
+                'require'=>false,
+            ])
+            ->add('pasInscrit',CheckboxType::class, [
+                'label'=>'Sorties auxquelles je ne  suis pas inscrit(e)',
+                'require'=>false,
+            ] )
+            ->add('degaPasse', CheckboxType::class, [
+        'label'=>'Sortie passées',
+        'require'=>false,
+    ] )
         ;
     }
 

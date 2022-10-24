@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\Rechercher;
 use App\Entity\Participant;
 use App\Repository\CampusRepository;
 use App\Repository\ParticipantRepository;
@@ -28,6 +29,9 @@ class MainController extends AbstractController
     #[Route('/index', name: 'app_main_connecte')]
     public function indexConnecte(ParticipantRepository $participantRepository, CampusRepository $campusRepository, SortieRepository $sortieRepository): Response
     {
+
+        $form = $this->createForm(Rechercher::class);
+
         $utilisateur = $this->getUser();
         $campus = $campusRepository->findAll();
         $sortie = $sortieRepository->findAll();
