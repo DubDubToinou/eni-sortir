@@ -51,7 +51,7 @@ class MainController extends AbstractController
 
             $sortie = $sortieRepository->rechercher($utilisateur->getId(), $mots, $rechercheCampus, $organisateur, $inscrit, $pasInscrit, $dejaPasse, $dateDebut,$dateFin);
 
-            return $this->renderForm('main/indexConnecte.html.twig', [
+            return $this->render('main/indexConnecte.html.twig', [
                 'utilisateur' =>$utilisateur,
                 'campuses'=>$campus,
                 'sorties'=>$sortie,

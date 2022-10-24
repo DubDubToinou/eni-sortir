@@ -21,6 +21,7 @@ class RechercherType extends AbstractType
                 'class'=>Campus::class,
                 'choice_label'=>'nom',
                 'required'=>false])
+
             ->add('mots', SearchType::class, [
                 'label'=>'Le nom contient',
                 'required'=>false,
@@ -48,8 +49,8 @@ class RechercherType extends AbstractType
                 'required'=>false,
             ] )
             ->add('degaPasse', CheckboxType::class, [
-        'label'=>'Sortie passées',
-        'required'=>false,
+                'label'=>'Sortie passées',
+                'required'=>false,
     ] )
         ;
     }
