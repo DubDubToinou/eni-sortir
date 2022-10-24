@@ -37,19 +37,19 @@ class RechercherType extends AbstractType
             ])
             ->add('organisateur', CheckboxType::class, [
                 'label'=>'Sortie dont je suis l\'organisateur/trice',
-                'require'=>false,
+                'required'=>false,
             ])
             ->add('inscrit',CheckboxType::class, [
                 'label'=>'Sorties auxquelles je suis inscrit',
-                'require'=>false,
+                'required'=>false,
             ])
             ->add('pasInscrit',CheckboxType::class, [
                 'label'=>'Sorties auxquelles je ne  suis pas inscrit(e)',
-                'require'=>false,
+                'required'=>false,
             ] )
             ->add('degaPasse', CheckboxType::class, [
         'label'=>'Sortie passées',
-        'require'=>false,
+        'required'=>false,
     ] )
         ;
     }

@@ -54,7 +54,8 @@ class MainController extends AbstractController
             return $this->renderForm('main/indexConnecte.html.twig', [
                 'utilisateur' =>$utilisateur,
                 'campuses'=>$campus,
-                'sorties'=>$sortie
+                'sorties'=>$sortie,
+                'form'=>$formulaireRecherche,
             ]);
         }
 
@@ -64,7 +65,8 @@ class MainController extends AbstractController
         return $this->render('main/indexConnecte.html.twig', [
             'utilisateur' =>$utilisateur,
             'campuses'=>$campus,
-            'sorties'=>$sortie
+            'sorties'=>$sortie,
+            'form'=>$formulaireRecherche,
         ]);
     }
 
