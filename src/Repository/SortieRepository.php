@@ -91,13 +91,15 @@ class SortieRepository extends ServiceEntityRepository
         if ($inscrit)
         {
             $query->innerJoin('s.participants', 'p');
-            $query->andWhere('p.id = :id')          ->setParameter('id', $id);
+            $query->andWhere('p.id = :id')
+                ->setParameter('id', $id);
         }
 
         if ($pasInscrit)
         {
             $query->innerJoin('s.participants', 'p');
-            $query->andWhere('p.id != :id')->setParameter('id', $id);
+            $query->andWhere('p.id != :id')
+                ->setParameter('id', $id);
         }
 
         if ($dejaPasse)
