@@ -17,6 +17,7 @@ class RechercherType extends AbstractType
     {
         $builder
             ->add('rechercheCampus', EntityType::class,[
+                'placeholder'=>'-- Choissisez votre campus --',
                 'label'=>'Campus',
                 'class'=> Campus::class,
                 'choice_label'=>'nom',
@@ -48,7 +49,7 @@ class RechercherType extends AbstractType
             ])
 
             ->add('pasInscrit',CheckboxType::class, [
-                'label'=>'Sorties auxquelles je ne  suis pas inscrit(e)',
+                'label'=>'Sorties auxquelles je ne suis pas inscrit(e)',
                 'required'=>false,
             ])
 

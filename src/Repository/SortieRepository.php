@@ -58,63 +58,56 @@ class SortieRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('s')
             ->select('s', 'p')
-        ->join('s.participants', 'p')
-        ->andWhere('s.id = :id')
+            ->join('s.participants', 'p')
+            ->andWhere('s.id = :id')
             ->setParameter(':id', $id);
 
         return $qb->getQuery()->getResult();
 
     }
 
-    public function rechercher($id, $mots = null , $rechercheCampus = null, $organisateur = false,
-                           $inscrit = false, $pasInscrit = false, $dejaPasse = false,
-                           $dateHeureDebut = null, $dateLimiteInscription = null
+    public function rechercher($id, $mots = null, $rechercheCampus = null, $organisateur = false,
+                               $inscrit = false, $pasInscrit = false, $dejaPasse = false,
+                               $dateHeureDebut = null, $dateLimiteInscription = null
     )
     {
         $query = $this->createQueryBuilder('s');
 
-        if ($mots != null){
+        if ($mots != null) {
             $query->where('MATCH_AGAINST(s.nom, s.infosSortie) AGAINST (:mots boolean)>0')->setParameter('mots', $mots);
         }
 
-        if ($rechercheCampus != null)
-        {
+        if ($rechercheCampus != null) {
             $query->leftJoin('s.campus', 'c');
             $query->andWhere('c.id = :id')->setParameter('id', $rechercheCampus);
         }
 
-        if ($organisateur)
-        {
+        if ($organisateur) {
             $query->andWhere('s.organisateur = :id')->setParameter('id', $id);
         }
 
-        if ($inscrit)
-        {
+
+        if ($inscrit) {
             $query->innerJoin('s.participants', 'p');
-            $query->andWhere('p.id = :id')
-                ->setParameter('id', $id);
+            $query->andWhere('p.id = :id')->setParameter('id', $id);
         }
 
-        if ($pasInscrit)
-        {
+        if ($pasInscrit) {
             $query->innerJoin('s.participants', 'p');
-            $query->andWhere('p.id != :id')
-                ->setParameter('id', $id);
+            $query->andWhere('p.id != :id')->setParameter('id', $id);
         }
 
-        if ($dejaPasse)
-        {
-            $query->andWhere('s.etat = 8 ');
+
+        if ($dejaPasse) {
+            $query->andWhere('s.etat = 5 ');
         }
 
-        if ($dateHeureDebut != null)
-        {
-            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')->setParameter('dateHeureDebut',  $dateHeureDebut);
+        if ($dateHeureDebut != null) {
+            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')->setParameter('dateHeureDebut', $dateHeureDebut);
             $query->orderBy('s.dateHeureDebut', 'ASC');
         }
 
-        if ($dateLimiteInscription != null)
-        {
+        if ($dateLimiteInscription != null) {
             $query->andWhere('s.dateLimiteInscription > :dateLimiteInscription')
                 ->setParameter('dateLimiteInscription', $dateLimiteInscription);
             $query->orderBy('s.dateHeureDebut', 'ASC');

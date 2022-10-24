@@ -21,11 +21,11 @@ class Campus
     #[Groups('listeSortie:read')]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'Campus', targetEntity: Participant::class)]
+    #[ORM\OneToMany(mappedBy: 'Campus', targetEntity: Participant::class, cascade: ["persist", "remove"])]
     #[Groups('listeSortie:read')]
     private Collection $participants;
 
-    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Sortie::class, cascade: ["persist", "remove"])]
     private Collection $sorties;
 
     public function __construct()
