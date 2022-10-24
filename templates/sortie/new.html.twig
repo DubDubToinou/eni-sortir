@@ -33,13 +33,13 @@
     <button class="btn" name="save">Sauvegarder</button>
     {{ form_end(form) }}
 
-    <button type="button" class="open" onclick="openPopUp()">Ajouter une ville</button>
+    <button type="button" class="open" onclick="openPopUp()">Ajouter un lieu</button>
 
     <div class="popUp">
-        {{ form_start(villeForm) }}
-        {{ form_widget(villeForm) }}
+        {{ form_start(lieuForm) }}
+        {{ form_widget(lieuForm) }}
         <button type="submit">Ajouter</button>
-        {{ form_end(villeForm) }}
+        {{ form_end(lieuForm) }}
         <button type="button" class="close" onclick="closePopUp()">Annuler</button>
     </div>
 
