@@ -103,7 +103,8 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if ($dateHeureDebut != null) {
-            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')->setParameter('dateHeureDebut', $dateHeureDebut);
+            $query->andWhere('s.dateHeureDebut > :dateHeureDebut')
+                ->setParameter('dateHeureDebut', $dateHeureDebut);
             $query->orderBy('s.dateHeureDebut', 'ASC');
         }
 
