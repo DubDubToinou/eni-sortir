@@ -42,14 +42,14 @@ class MainController extends AbstractController
             $rechercheCampus = $formulaireRecherche->get('rechercheCampus')->getData();
             $mots = $formulaireRecherche->get('mots')->getData();
             $dateDebut = $formulaireRecherche->get('dateHeureDebut')->getData();
-            $dateFin = $formulaireRecherche->get('dateLimiteInscription')->getData();
+            $dateLimiteInscription = $formulaireRecherche->get('dateLimiteInscription')->getData();
             $organisateur = $formulaireRecherche->get('organisateur')->getData();
             $inscrit = $formulaireRecherche->get('inscrit')->getData();
             $pasInscrit = $formulaireRecherche->get('pasInscrit')->getData();
             $dejaPasse = $formulaireRecherche->get('dejaPasse')->getData();
 
 
-            $sortie = $sortieRepository->rechercher($utilisateurConnecte->getId(), $mots, $rechercheCampus, $organisateur, $inscrit, $pasInscrit, $dejaPasse, $dateDebut, $dateFin);
+            $sortie = $sortieRepository->rechercher($utilisateurConnecte->getId(), $mots, $rechercheCampus, $organisateur, $inscrit, $pasInscrit, $dejaPasse, $dateDebut, $dateLimiteInscription);
 
             return $this->renderForm('main/indexConnecte.html.twig', [
                 'utilisateur' =>$utilisateurConnecte,
