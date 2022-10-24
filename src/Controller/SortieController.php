@@ -46,7 +46,7 @@ class SortieController extends AbstractController
         $villeForm = $this->createForm(VilleType::class, $ville);
         $villeForm->handleRequest($request);
 
-        if ($villeForm->isSubmitted() && $villeForm->isValid()){
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
             $villeRepository->save($ville, true);
         }
 
@@ -98,23 +98,23 @@ class SortieController extends AbstractController
     #[Route('/{id}', name: 'app_sortie_delete', methods: ['POST'])]
     public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
             $sortieRepository->remove($sortie, true);
         }
 
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/inscription/{id}', name:'app_inscription_sortie', methods: ['GET', 'POST'])]
-    public function inscriptionSortie(int $id, SortieRepository $sortieRepository,SortieRepository $sR, Sortie $inscrits):Response
+    #[Route('/inscription/{id}', name: 'app_inscription_sortie', methods: ['GET', 'POST'])]
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, SortieRepository $sR, Sortie $inscrits): Response
     {
         $participant = $this->getUser();
         $sortie = $sortieRepository->find($id);
         $inscrits = $sortie->getParticipants();
-        foreach ( $inscrits as $inscrit){
+        foreach ($inscrits as $inscrit) {
             if ($participant === $inscrit) {
                 $this->addFlash('failed', 'Vous êtes déjà inscrit');
-                return $this->redirectToRoute('app_sortie_show',['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
                 break;
             }
         }
@@ -124,17 +124,18 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/desistement/{id}', name:'app_desistement_sortie', methods: ['GET', 'POST'])]
-    public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie):Response
+    #[Route('/desistement/{id}', name: 'app_desistement_sortie', methods: ['GET', 'POST'])]
+    public function desistementSortie(int $id, SortieRepository $sortieRepository, Sortie $sortie): Response
     {
         $participant = $this->getUser();
-        $sortie=$sortieRepository->find($id);
+        $sortie = $sortieRepository->find($id);
         $sortie->removeParticipant($participant);
-        $sortieRepository->save($sortie,true);
+        $sortieRepository->save($sortie, true);
         $this->addFlash('success', 'Vous vous êtes désister.');
 
-        return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/annulation/{id}', name: 'app_sortie_annulation', methods: ['GET', 'POST'])]
     public function annulation(int $id, Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
@@ -144,26 +145,26 @@ class SortieController extends AbstractController
         $participant = $this->getUser();
 
         $sortie = $sortieRepository->find($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setEtat($etatRepository->find(6));
+            $sortieRepository->save($sortie, true);
+            $this->addFlash("succes", "Annulation confimée.");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+        }
 
-        $sortie->setMotif('motif');
-        $sortie->setEtat($etatRepository->find(6));
-        $sortieRepository->save($sortie, true);
-        $this->addFlash("succes", "Annulation confimée.");
-        return $this->renderForm('sortie/show.html.twig', [
+        return $this->renderForm('sortie/annulation.html.twig', [
             'sortie' => $sortie,
-            'form' => $form,
-        ]);
-
-    return $this->redirectToRoute('app_sortie_show', ['id'=>$sortie->getId()], Response::HTTP_SEE_OTHER);
+            'form' => $form,]);
     }
-    #[Route('/{id}', name:'app_sortie_publier', methods:'POST')]
-    public function publier (int $id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository)
+
+    #[Route('/publier/{id}', name: 'app_sortie_publier', methods: ['GET','POST'])]
+    public function publier(int $id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository)
     {
-        $participant=$this->getUser();
-        $sortie=$sortieRepository->find($id);
+        $participant = $this->getUser();
+        $sortie = $sortieRepository->find($id);
         $sortie->setEtat($etatRepository->find(2));
         $sortieRepository->save($sortie, true);
         $this->addFlash('succes', 'Sortie Publiée et ouverte aux inscriptions.');
-        return $this->$sortie;
+        return $this->redirectToRoute('app_main_connecte', [], Response::HTTP_SEE_OTHER);
     }
 }
