@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\AnnulationFormType;
