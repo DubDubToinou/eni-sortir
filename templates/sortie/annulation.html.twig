@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <h1>Annulation de la sortie</h1>
+
+    {{ sortie.nom }}
+    {{ sortie.dateHeureDebut }}
+    {{ sortie.campus.nom }}
+    {{ sortie.lieu }}
+
     {{ form_start(form) }}
         {{ form_widget(form) }}
     <button type="submit">Confirmer</button>
