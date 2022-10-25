@@ -31,11 +31,15 @@ class RechercherType extends AbstractType
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label'=>'Entre',
                 'required'=>false,
+                'widget'=>'single_text',
+                'attr'=>['id'=>'datepicker'],
             ])
 
             ->add('dateLimiteInscription', DateTimeType::class,[
                 'label'=>'et',
                 'required'=>false,
+                'widget'=>'single_text',
+                'attr'=>['id'=>'datepicker'],
             ])
 
             ->add('organisateur', CheckboxType::class, [
