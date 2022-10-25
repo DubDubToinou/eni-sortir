@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\AnnulationFormType;
 use App\Form\LieuType;
+use App\Form\SortieModifierType;
 use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\EtatRepository;
@@ -84,7 +85,7 @@ class SortieController extends AbstractController
     #[Route('/{id}/edit', name: 'app_sortie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
-        $form = $this->createForm(SortieType::class, $sortie);
+        $form = $this->createForm(SortieModifierType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
