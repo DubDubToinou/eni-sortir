@@ -39,6 +39,19 @@ class LieuRepository extends ServiceEntityRepository
         }
     }
 
+    public function listeLieuParVille(int $id){
+
+        $qb = $this->createQueryBuilder('l')
+            ->select('l','v')
+            ->innerJoin('l.ville', 'v')
+            ->andWhere('v.id = :id')
+            ->setParameter(':id', $id);
+
+        return $qb->getQuery()->getResult();
+
+
+    }
+
 
 //    /**
 //     * @return Lieu[] Returns an array of Lieu objects

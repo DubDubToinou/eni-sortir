@@ -3,23 +3,25 @@
 namespace App\Controller\Api;
 
 use App\Repository\LieuRepository;
-use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/api')]
 class ApiVilleController extends AbstractController
 {
-    #[Route('/ville/{id}')]
-    public function listeLieuParVille(int $idVille, VilleRepository $villeRepository, LieuRepository $lieuRepository): JsonResponse{
+    #[Route('/ville/{id}' , methods: ['POST', 'GET'])]
+    public function listeLieuParVille(int $idVille, LieuRepository $lieuRepository): JsonResponse{
 
-        $ville = $villeRepository->find($idVille);
 
-        $lieu = $lieuRepository->find($ville);
+        $lieu = $lieuRepository->listeLieuParVille($idVille);
+        dump($lieu);
 
-        return $this->json($lieu);
-
+        return $this->json(
+            $lieu,
+            Response::HTTP_OK
+        );
     }
 
 }
