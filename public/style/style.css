@@ -86,6 +86,11 @@ nav>a {
 }
 
 @media(min-width: 800px){
+
+    header {
+        padding: 0 112px;
+    }
+
     .hamburger {
         display: none;
     }
@@ -105,4 +110,28 @@ nav>a {
     .connexion {
         border-top: none;
     }
+}
+
+/* FOOTER */
+
+body {
+    position: relative;
+    min-height: 100vh;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 24px 80px;
+    background-color: #F9FAFB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+footer>p {
+    font-size: 14px;
+    color: #667085;
 }

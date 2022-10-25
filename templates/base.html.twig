@@ -21,7 +21,7 @@
 <header>
     <a class="logo" href="{{ path('app_main') }}">Sortir</a>
     <nav>
-        <a href="{{ path('app_main') }}">Acceuil</a>
+        <a href="{{ path('app_main') }}">Accueil</a>
         {% if app.user %}
             <a href="{{ path('app_sortie_new') }}">Organiser</a>
         {% endif %}
@@ -29,7 +29,7 @@
             <a href="{{ path('admin_index') }}">Admin</a>
         {% endif %}
         {% if app.user %}
-            <a class="connexion" href="{{ path('app_participant_profil', {'id':app.user.id}) }}">Mon Profil</a>
+            <a class="connexion" href="{{ path('app_participant_profil', {'id':app.user.id}) }}">Mon profil</a>
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
         {% else %}
             <a class="connexion" href="{{ path('app_register') }}">S'inscrire</a>
@@ -58,6 +58,9 @@
     {% endblock %}
 </main>
 <footer>
+    <p>ENI Sortir</p>
+    <a href="https://github.com/DubDubToinou/eni-sortir" target="_blank"><img src="{{ asset('img/Icongithub.svg') }}" alt="Logo github" width="20px"></a>
+    <p>2022</p>
 </footer>
 </body>
 </html>
