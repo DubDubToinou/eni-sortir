@@ -3,13 +3,15 @@
 {% block title %}{{ parent() }}Accueil{% endblock %}
 
 {% block body %}
-
-    <h1>Bienvenue sur votre application de sortie !</h1>
-
-    {% if app.user %}
-        <h2>Bonjour {{ app.user.prenom ~ ' ' ~ app.user.nom|upper }}</h2>
-    {% endif %}
-
-
-
+    <div class="hero">
+        <div class="hero-text">
+            <h1>L'organisation, sans prise de tête.</h1>
+            <p>Choisissez votre campus, retrouvez vos camarades, vos professeurs, vos amis, et amusez vous !</p>
+            <div class="heroButtons">
+                <a class="whitePurpleButton" href="{{ asset(path('app_login')) }}">Se connecter</a>
+                <a class="purpleButton" href="{{ asset(path('app_register')) }}">S'inscrire</a>
+            </div>
+        </div>
+        <img src="{{ asset('img/hero.svg') }}" alt="Illustration" width="650px">
+    </div>
 {% endblock %}

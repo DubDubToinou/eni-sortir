@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&display=swap');
 
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif;
     color: #141414;
 }
 
@@ -24,8 +25,9 @@ header {
 }
 
 .logo {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 24px;
+    font-family: 'Sora', sans-serif;
 }
 
 .hamburger {
@@ -134,4 +136,75 @@ footer {
 footer>p {
     font-size: 14px;
     color: #667085;
+}
+
+/* HERO */
+
+.hero {
+    padding: 24px 16px;
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 50px;
+    text-align: center;
+}
+
+.hero-text>p {
+    color: #475467;
+    font-size: 20px;
+    text-align: center;
+}
+
+.heroButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.hero>img {
+    display: none;
+}
+
+@media(min-width: 800px){
+    .hero {
+        display: flex;
+        padding: 0 112px;
+    }
+
+    .hero-text {
+        align-items: flex-start;
+    }
+
+    .hero>img {
+        display: block;
+        width: 40vw;
+    }
+
+    h1, .hero-text>p {
+        text-align: left;
+    }
+}
+
+/* LINKS & BUTTONS */
+
+.purpleButton {
+    background-color: #7F56D9;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 25px;
+}
+
+.whitePurpleButton {
+    color: #7F56D9;
+    border: 1px solid #7F56D9;
+    padding: 12px 20px;
+    border-radius: 25px;
 }
