@@ -23,7 +23,8 @@
     <nav>
         <a href="{{ path('app_main') }}">Accueil</a>
         {% if app.user %}
-            <a href="{{ path('app_sortie_new') }}">Organiser</a>
+            <a href="{{ path('app_main_connecte') }}">Voir les sorties</a>
+            <a href="{{ path('app_sortie_new') }}">Organiser une sortie</a>
         {% endif %}
         {% if app.user and is_granted("ROLE_ADMIN") %}
             <a href="{{ path('admin_index') }}">Admin</a>

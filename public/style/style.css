@@ -173,9 +173,10 @@ h1 {
     display: none;
 }
 
-@media(min-width: 800px){
+@media(min-width: 800px) {
     .hero {
         display: flex;
+        gap: 144px;
         padding: 0 112px;
     }
 
