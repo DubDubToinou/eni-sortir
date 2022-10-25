@@ -12,6 +12,6 @@
     {{ include('sortie/_delete_form.html.twig') }}
 
     {% if sortie.organisateur is same as (app.user) %}
-    <a href="{{ path('app_sortie_annulation') }}">Annulation</a>
+    <a href="{{ path('app_sortie_annulation', {'id':sortie.id}) }}">Annulation</a>
     {% endif %}
 {% endblock %}
