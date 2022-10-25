@@ -7,15 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('style/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    {% block style %}{% endblock %}
 
     <script src="{{ asset('js/hamburger.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
     <script src="{{ asset("js/flatpickermyconfig.js") }}"></script>
-    {% block script %}{% endblock %}
 
     <title>{% block title %}Sortir | {% endblock %}</title>
+    {% block script %}{% endblock %}
+    {% block style %}{% endblock %}
 </head>
 <body>
 <header>
@@ -29,7 +29,7 @@
             <a href="{{ path('admin_index') }}">Admin</a>
         {% endif %}
         {% if app.user %}
-            <a class="connexion" href="{{ path('app_participant_profil', {'id':app.user.id}) }}">Mon profil</a>
+            <a class="connexion" href="{{ path('app_participant_profil', {'id':app.user.id}) }}">Mon Profil</a>
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
         {% else %}
             <a class="connexion" href="{{ path('app_register') }}">S'inscrire</a>
@@ -44,6 +44,7 @@
 </header>
 <main>
     {# ------------ For pour affichage des message flash -------------- #}
+
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash flash-{{ label }}">
@@ -59,8 +60,12 @@
 </main>
 <footer>
     <p>ENI Sortir</p>
-    <a href="https://github.com/DubDubToinou/eni-sortir" target="_blank"><img src="{{ asset('img/Icongithub.svg') }}" alt="Logo github" width="20px"></a>
+    <a href="https://github.com/DubDubToinou/eni-sortir" target="_blank"><img src="{{ asset('img/Icongithub.svg') }}" alt="Logo Github"></a>
     <p>2022</p>
 </footer>
+
+{% block javascript %}
+
+{% endblock %}
 </body>
 </html>
