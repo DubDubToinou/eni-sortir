@@ -17,7 +17,7 @@ class RechercherType extends AbstractType
     {
         $builder
             ->add('rechercheCampus', EntityType::class,[
-                'placeholder'=>'-- Choissisez votre campus --',
+                'placeholder'=>'Choissisez votre campus',
                 'label'=>'Campus',
                 'class'=> Campus::class,
                 'choice_label'=>'nom',
