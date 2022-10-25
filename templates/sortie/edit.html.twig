@@ -1,16 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Sortie{% endblock %}
+{% block title %} {{ parent() }}Modifier la sortie{% endblock %}
 
 {% block body %}
-    <h1>Edit Sortie</h1>
+    <h1>Modifier une sortie</h1>
 
-    {{ include('sortie/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if sortie.organisateur is same as app.user %}
 
-    <a href="{{ path('app_sortie_index') }}">back to list</a>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
 
-    {{ include('sortie/_delete_form.html.twig') }}
+    {% else %}
+        <p>Vous n'êtes pas organisateur de la sortie.</p>
+    {% endif %}
 
+
+    <a href="{{ path('app_main_connecte') }}">Retour la liste des sorties.</a>
+
+
+{#
     {% if sortie.organisateur is same as (app.user) %}
     <a href="{{ path('app_sortie_annulation', {'id':sortie.id}) }}">Annulation</a>
     {% endif %}
