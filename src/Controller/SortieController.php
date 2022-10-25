@@ -165,17 +165,20 @@ class SortieController extends AbstractController
         $participant = $this->getUser();
 
         $sortie = $sortieRepository->find($id);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $sortie->setEtat($etatRepository->find(6));
-            $sortieRepository->save($sortie, true);
-            $this->addFlash("succes", "Annulation confimée.");
-            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
-        }
+            if ($form->isSubmitted() && $form->isValid()) {
+                $sortie->setEtat($etatRepository->find(6));
+                $sortieRepository->save($sortie, true);
+                $this->addFlash("succes", "Annulation confirmée.");
+                return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+            }
 
-        return $this->renderForm('sortie/annulation.html.twig', [
-            'sortie' => $sortie,
-            'form' => $form,]);
+            return $this->renderForm('sortie/annulation.html.twig', [
+                'sortie' => $sortie,
+                'form' => $form,]);
+
+
     }
+
 
     #[Route('/publier/{id}', name: 'app_sortie_publier', methods: ['GET', 'POST'])]
     public function publier(int $id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository)

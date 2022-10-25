@@ -3,19 +3,26 @@
 {% block body %}
 
     <h1>Annulation de la sortie</h1>
+    {% if sortie.organisateur is same as app.user %}
+       Nom de la sortie : {{ sortie.nom }}
+        Heure de la sortie : {{ sortie.dateHeureDebut|date('d/m/Y à h:i') }}
+        Campus : {{ sortie.campus.nom }}
+        Lieu de la sortie : {{ sortie.lieu }}
 
-    {{ sortie.nom }}
-    {{ sortie.dateHeureDebut }}
-    {{ sortie.campus.nom }}
-    {{ sortie.lieu }}
+        {{ form_start(form) }}
 
-    {{ form_start(form) }}
         {{ form_widget(form) }}
-    <button type="submit">Confirmer</button>
-    {{ form_end(form) }}
+
+        <button type="submit" onclick="return confirm('Voulez vous vraiment annuler cette sortie ?')">Confirmer</button>
+
+        {{ form_end(form) }}
+    {% else %}
+        <p>Vous n'êtes pas l'organisateur de cette sortie.</p>
+        <a href="{{ path('app_main_connecte') }}">Retour à l'accueil</a>
+    {% endif %}
 {% endblock %}
 
 {% block title %}
-
+    {{ parent() }} Annulation de la sortie
 {% endblock %}
 
