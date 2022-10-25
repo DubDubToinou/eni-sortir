@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Repository\VilleRepository;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -67,6 +69,18 @@ class SortieModifierType extends AbstractType
                 },
                 'required'=>false,
                 'mapped'=>false,
+                'attr'=>[
+                    'id'=>'ville',
+                ]
+            ])
+            ->add('lieu', EntityType::class,[
+                'class'=>Lieu::class,
+                'label'=>'Lieu ',
+                'placeholder'=>'-- Selectionner la ville --',
+                'choice_label'=>'nom',
+                'attr'=>[
+                    'id'=>'lieu'
+                ]
             ])
 
             //->add('organisateur')

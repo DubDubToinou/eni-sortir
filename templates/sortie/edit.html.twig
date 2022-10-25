@@ -9,18 +9,52 @@
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
+        <div>
+            Adresse : {{ sortie.lieu.rue ~ ' à ' ~ sortie.lieu.ville.nom ~ ' - ' ~ sortie.lieu.ville.codePostal }}
+        </div>
+        <button type="submit">Valider les modifications</button>
         {{ form_end(form) }}
 
     {% else %}
         <p>Vous n'êtes pas organisateur de la sortie.</p>
     {% endif %}
 
-
     <a href="{{ path('app_main_connecte') }}">Retour la liste des sorties.</a>
 
-
-{#
     {% if sortie.organisateur is same as (app.user) %}
-    <a href="{{ path('app_sortie_annulation', {'id':sortie.id}) }}">Annulation</a>
+
+        <a href="{{ path('app_sortie_annulation', {'id':sortie.id}) }}">Annulation</a>
+        <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}">Publier la sortie</a>
     {% endif %}
+
 {% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    windows.onload = () =>{
+    const ville = document.querySelector("#sortie_modifier_ville");
+    ville.addEventListener("change",  ()=> {
+    initListeLieux(ville.value);
+})
+
+    function initListeLieux(ville){
+    fetch('{{ app.request.basePath }}/api/ville/' +ville,
+                {
+                    method : "POST",
+                    headers: {'Accept' : 'application/json'}
+                }
+        ).then(response =>response.json())
+                .then(response => {
+                    let options = ""
+                    response.map(lieux => {
+                        options += <option value="${lieu.id}"> ${lieux.nom} </option>
+                    })
+                    document.querySelector("#lieu").innerHTML = options
+                })
+        }
+    }
+</script>
+
+{% endblock %}
+
