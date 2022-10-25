@@ -6,14 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    {% block javascript %}
-    {# Flatpicker (calendrier datetimepicker) #}
+
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    {# Flatpicker import de la traduction française #}
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
-    {# Flatpicker : notre fichier de configuration #}
-    <script src="{{ asset("js/flatpicker_myconfig.js") }}"></script>
-    {% endblock %}
+    <script src="{{ asset("js/flatpickermyconfig.js") }}"></script>
+
     <title>{% block title %}Sortir | {% endblock %}</title>
     {% block script %}{% endblock %}
     {% block style %}{% endblock %}
