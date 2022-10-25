@@ -5,37 +5,45 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('style/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {% block style %}{% endblock %}
 
-
+    <script src="{{ asset('js/hamburger.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
     <script src="{{ asset("js/flatpickermyconfig.js") }}"></script>
+    {% block script %}{% endblock %}
 
     <title>{% block title %}Sortir | {% endblock %}</title>
-    {% block script %}{% endblock %}
-    {% block style %}{% endblock %}
 </head>
 <body>
-
-
 <header>
-    <a href="{{ path('app_main') }}">Accueil</a>
-    {% if app.user %}
-        <a href="{{ path('app_participant_profil', {'id':app.user.id}) }}">Mon Profil</a>
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
-        {% if is_granted("ROLE_ADMIN") %}
+    <a class="logo" href="{{ path('app_main') }}">Sortir</a>
+    <nav>
+        <a href="{{ path('app_main') }}">Acceuil</a>
+        {% if app.user %}
+            <a href="{{ path('app_sortie_new') }}">Organiser</a>
+        {% endif %}
+        {% if app.user and is_granted("ROLE_ADMIN") %}
             <a href="{{ path('admin_index') }}">Admin</a>
         {% endif %}
-    {% else %}
-        <a href="{{ path('app_register') }}">S'inscrire</a>
-        <a href="{{ path('app_login') }}">Se Connecter</a>
-    {% endif %}
-
+        {% if app.user %}
+            <a class="connexion" href="{{ path('app_participant_profil', {'id':app.user.id}) }}">Mon Profil</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% else %}
+            <a class="connexion" href="{{ path('app_register') }}">S'inscrire</a>
+            <a href="{{ path('app_login') }}">Se Connecter</a>
+        {% endif %}
+    </nav>
+    <div class="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
 </header>
 <main>
     {# ------------ For pour affichage des message flash -------------- #}
-
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash flash-{{ label }}">
@@ -48,13 +56,8 @@
     {% block body %}
 
     {% endblock %}
-
 </main>
 <footer>
-
 </footer>
-
-
-
 </body>
 </html>
