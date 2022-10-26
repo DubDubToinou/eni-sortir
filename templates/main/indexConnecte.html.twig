@@ -1,22 +1,53 @@
 {% extends 'base.html.twig' %}
 
+{% block script %}
+    <script src="{{ asset('js/searchFilters.js') }}" defer></script>
+{% endblock %}
 {% block title %}{{ parent() }}Accueil{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h3>Trouver une sortie</h3>
+        <h2>Trouver une sortie</h2>
 
         {{ form_start(form) }}
-        {{ form_widget(form.mots) }}
-        <button class="purpleButton" type="submit">Rechercher</button>
+        <div class="searchBar">
+            {{ form_widget(form.mots) }}
+            <button class="purpleButton" type="submit">Rechercher</button>
+            <p class="whiteButton filterButton">Filtrer</p>
+        </div>
         <div class="filters">
-            {{ form_widget(form.rechercheCampus) }}
-            {{ form_widget(form.dateHeureDebut) }}
-            {{ form_widget(form.dateLimiteInscription) }}
-            {{ form_widget(form.organisateur) }}
-            {{ form_widget(form.inscrit) }}
-            {{ form_widget(form.pasInscrit) }}
-            {{ form_widget(form.dejaPasse) }}
+            <div class="filterSelects">
+                <div class="inputField">
+                    <label for="rechercher_rechercheCampus">Campus</label>
+                    {{ form_widget(form.rechercheCampus) }}
+                </div>
+                <div class="inputField">
+                    <label for="rechercher_dateHeureDebut">Date de début</label>
+                    {{ form_widget(form.dateHeureDebut) }}
+                </div>
+                <div class="inputField">
+                    <label for="rechercher_dateLimiteInscription">Clôture des inscriptions</label>
+                    {{ form_widget(form.dateLimiteInscription) }}
+                </div>
+            </div>
+            <div class="filterCheckboxes">
+                <div class="checkboxField">
+                    {{ form_widget(form.organisateur) }}
+                    <label for="rechercher_organisateur">Sorties que j'organise</label>
+                </div>
+                <div class="checkboxField">
+                    {{ form_widget(form.inscrit) }}
+                    <label for="rechercher_inscrit">Sorties auxqelles je suis inscrit</label>
+                </div>
+                <div class="checkboxField">
+                    {{ form_widget(form.pasInscrit) }}
+                    <label for="rechercher_pasInscrit">Sorties auxquelles je ne suis pas inscrit</label>
+                </div>
+                <div class="checkboxField">
+                    {{ form_widget(form.dejaPasse) }}
+                    <label for="rechercher_dejaPasse">Sorties passées</label>
+                </div>
+            </div>
         </div>
         {{ form_end(form) }}
 
@@ -49,7 +80,7 @@
 
         <label for="sortiePassee">Sortie passées</label>
         <input type="checkbox" id="sortiePassee" name="sortiePassee"> #}
-
+        <div class="table">
         <table>
             <tr>
                 <th class="tableHead">ID</th>
@@ -111,8 +142,9 @@
                 </tr>
             {% endfor %}
         </table>
+        </div>
 
-        <a href="{{ path('app_sortie_new') }}">Créer une sortie</a>
+        <a class="purpleButton tableButton" href="{{ path('app_sortie_new') }}">Organiser une sortie</a>
     </div>
 
 
