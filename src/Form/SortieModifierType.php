@@ -89,13 +89,13 @@ class SortieModifierType extends AbstractType
                 ]);
             };
 
-        $builder->get('ville')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $eventVille) use ($formModifier){
-                $ville = $eventVille->getForm()->getData();
-                $formModifier($eventVille->getForm()->getParent(), $ville);
-            }
-        );
+            $builder->get('ville')->addEventListener(
+                FormEvents::POST_SUBMIT,
+                function (FormEvent $eventVille) use ($formModifier){
+                    $ville = $eventVille->getForm()->getData();
+                    $formModifier($eventVille->getForm()->getParent(), $ville);
+                }
+            );
     }
 
             //->add('organisateur')

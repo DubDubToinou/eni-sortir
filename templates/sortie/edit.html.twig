@@ -18,6 +18,7 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
+                <h4>Ajouter un lieu: </h4>
                 {{ form_start(formLieu) }}
                 {{ form_widget(formLieu) }}
                 <button type="submit">Ajouter</button>
@@ -59,10 +60,10 @@
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
-
-        {#  <div>
+{#
+        <div>
             Adresse : {{ sortie.lieu.rue ~ ' à ' ~ sortie.lieu.ville.nom ~ ' - ' ~ sortie.lieu.ville.codePostal }}
-        </div> #}
+        </div>#}
         <button type="submit">Valider les modifications</button>
         {{ form_end(form) }}
 
@@ -80,9 +81,10 @@
 
 {% endblock %}
 
-{% block javascript %}
+{% block script %}
 
-<script src="{{  asset('js/choixVille.js') }}"></script>
+    <script src="{{ asset('js/choixVille.js') }}"></script>
+
 {% endblock %}
 
 
