@@ -10,9 +10,6 @@
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <div>
-            <select id="lieu">
-
-            </select>
             Adresse : {{ sortie.lieu.rue ~ ' à ' ~ sortie.lieu.ville.nom ~ ' - ' ~ sortie.lieu.ville.codePostal }}
         </div>
         <button type="submit">Valider les modifications</button>
@@ -30,31 +27,10 @@
         <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}">Publier la sortie</a>
     {% endif %}
 
-    <script>
-        let windows;
-        windows.onload = () => {
-            const ville = document.querySelector("#sortie_modifier_ville");
-            ville.addEventListener("change", () => {
-                initListeLieux(ville.value);
-            })
+{% endblock %}
 
-            function initListeLieux(ville) {
-                fetch('{{ app.request.basePath }}/api/ville'+ville,
-                    {
-                        method: "POST",
-                        headers: {'Accept': 'application/json'}
-                    }
-                ).then(response => response.json())
-                    .then(response => {
-                        let options = ""
-                        response.map(lieu => {
-                            options += <p> ${lieu.nom} </>
-                        })
-                        document.querySelector("#sortie_modifier_lieu").innerHTML = options
-                    })
-            }
-        }
-    </script>
+{% block javascripts %}
+    <script src="{{ asset('js/choixVille.js') }}"></script>
 {% endblock %}
 
 
