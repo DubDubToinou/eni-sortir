@@ -65,11 +65,11 @@
     {% for participant in sortie.participants %}
         {% if participant is same as (app.user) and sortie.participants %}
             <a href="{{ path('app_desistement_sortie', {'id': sortie.id}) }}">Se désister</a>
-        {% endif %}
-    {% endfor %}
+        {% elseif not sortie.participants is same as participant %}
             <a href="{{ path('app_inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>
+        {% endif %}
 
-
+{% endfor %}
     <a href="{{ path('app_main_connecte') }}">Retour à la liste des sorties</a>
 
     {% if sortie.organisateur is same as (app.user) %}
