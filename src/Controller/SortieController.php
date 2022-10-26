@@ -96,7 +96,6 @@ class SortieController extends AbstractController
             $lieuRepository->save($lieu,true);
 
             $this->addFlash('success', 'lieu ajouté avec success');
-            return $this->redirectToRoute('app_sortie_edit', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
