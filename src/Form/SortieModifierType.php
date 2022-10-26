@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Test\FormInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieModifierType extends AbstractType
@@ -78,16 +78,14 @@ class SortieModifierType extends AbstractType
                 'placeholder'=>'-- Choissisez un lieu --'
             ]);
 
-
-
             $formModifier = function (FormInterface $form, Ville $ville = null){
                 $lieu = (null === $ville) ? [] : $ville->getLieux();
                 $form->add('lieu', EntityType::class,[
                     'class' => Lieu::class,
                     'choices' => $lieu,
                     'choice_label' => 'nom',
-                    'placeholder' => 'lieu [choisir une ville]',
-                    'label' => "Lieu : "
+                    'placeholder' => '-- Choissisez une ville --',
+                    'label' => 'Lieu : '
                 ]);
             };
 

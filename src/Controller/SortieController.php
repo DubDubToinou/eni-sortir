@@ -83,10 +83,21 @@ class SortieController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_sortie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
+    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, LieuRepository $lieuRepository): Response
     {
         $form = $this->createForm(SortieModifierType::class, $sortie);
         $form->handleRequest($request);
+
+        $lieu = new Lieu();
+        $formLieu = $this->createForm(LieuType::class, $lieu);
+        $formLieu->handleRequest($request);
+
+        if($formLieu->isSubmitted() && $formLieu->isValid()){
+            $lieuRepository->save($lieu,true);
+
+            $this->addFlash('success', 'lieu ajouté avec success');
+            return $this->redirectToRoute('app_sortie_edit', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->save($sortie, true);
@@ -96,6 +107,7 @@ class SortieController extends AbstractController
         }
 
         return $this->renderForm('sortie/edit.html.twig', [
+            'formLieu'=>$formLieu,
             'sortie' => $sortie,
             'form' => $form,
         ]);
