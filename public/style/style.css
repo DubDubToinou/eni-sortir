@@ -215,12 +215,57 @@ footer > p {
 
 /* TAGS */
 
-.greenTag {
+.greenTag, .Ouverte {
     padding: 2px 8px;
     background: #ECFDF3;
     border-radius: 16px;
     font-size: 14px;
     color: #027A48;
+    font-weight: 700;
+}
+
+.redTag, .Annulée {
+    padding: 2px 8px;
+    background: #FEF3F2;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #B42318;
+    font-weight: 700;
+}
+
+.blueTag, .Activité{
+    padding: 2px 8px;
+    background: #EFF8FF;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #175CD3;
+    font-weight: 700;
+}
+
+.purpleTag, .Créee {
+    padding: 2px 8px;
+    background: #F4F3FF;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #5925DC;
+    font-weight: 700;
+}
+
+.orangeTag, .Passée {
+    padding: 2px 8px;
+    background: #FFF6ED;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #C4320A;
+    font-weight: 700;
+}
+
+.greyTag, .Cloturée {
+    padding: 2px 8px;
+    background: #F2F4F7;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #344054;
     font-weight: 700;
 }
 
