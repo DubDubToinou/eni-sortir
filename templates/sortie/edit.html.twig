@@ -18,6 +18,7 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
+                <h4>Ajouter un lieu: </h4>
                 {{ form_start(formLieu) }}
                 {{ form_widget(formLieu) }}
                 <button type="submit">Ajouter</button>
@@ -59,10 +60,10 @@
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
-
-        {#  <div>
+{#
+        <div>
             Adresse : {{ sortie.lieu.rue ~ ' à ' ~ sortie.lieu.ville.nom ~ ' - ' ~ sortie.lieu.ville.codePostal }}
-        </div> #}
+        </div>#}
         <button type="submit">Valider les modifications</button>
         {{ form_end(form) }}
 
@@ -78,37 +79,6 @@
         <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}">Publier la sortie</a>
     {% endif %}
 
-    <script>
-        window.onload = () => {
-            let ville = document.querySelector("#sortie_modifier_ville");
-
-            ville.addEventListener("change", function () {
-                let form = this.closest("form");
-                let data = this.name + "=" + this.value;
-
-                fetch(form.action, {
-                    method: form.getAttribute("method"),
-                    body: data,
-                    headers: {
-                        "content-type": "application/x-www-form-urlencoded; charset:utf-8"
-                    }
-                })
-                    .then(response => response.text())
-                    .then(html => {
-                        let content = document.createElement("html");
-                        content.innerHTML = html;
-
-                        let nouveauSelect = content.querySelector("#sortie_modifier_lieu");
-                        document.querySelector("#sortie_modifier_lieu").replaceWith(nouveauSelect);
-                    })
-
-                    .catch(error => {
-                        console.log(error);
-                    })
-
-            })
-        }
-    </script>
 {% endblock %}
 
 {% block script %}
