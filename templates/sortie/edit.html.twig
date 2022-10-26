@@ -7,14 +7,62 @@
 
     {% if sortie.organisateur is same as app.user %}
 
+
+        {# ---------------------   MODAL ---------------------- -#}
+
+        <button id="myBtn">Ajouter un lieu</button>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                {{ form_start(formLieu) }}
+                {{ form_widget(formLieu) }}
+                <button type="submit">Ajouter</button>
+                {{ form_end(formLieu) }}
+            </div>
+
+        </div>
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+
+        {# ----- FIN MODAL ----- #}
+
+
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <div>
-            <select id="lieu">
 
-            </select>
+        {#  <div>
             Adresse : {{ sortie.lieu.rue ~ ' à ' ~ sortie.lieu.ville.nom ~ ' - ' ~ sortie.lieu.ville.codePostal }}
-        </div>
+        </div> #}
         <button type="submit">Valider les modifications</button>
         {{ form_end(form) }}
 
@@ -30,31 +78,11 @@
         <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}">Publier la sortie</a>
     {% endif %}
 
-    <script>
-        let windows;
-        windows.onload = () => {
-            const ville = document.querySelector("#sortie_modifier_ville");
-            ville.addEventListener("change", () => {
-                initListeLieux(ville.value);
-            })
+{% endblock %}
 
-            function initListeLieux(ville) {
-                fetch('{{ app.request.basePath }}/api/ville'+ville,
-                    {
-                        method: "POST",
-                        headers: {'Accept': 'application/json'}
-                    }
-                ).then(response => response.json())
-                    .then(response => {
-                        let options = ""
-                        response.map(lieu => {
-                            options += <p> ${lieu.nom} </>
-                        })
-                        document.querySelector("#sortie_modifier_lieu").innerHTML = options
-                    })
-            }
-        }
-    </script>
+{% block javascript %}
+
+<script src="{{  asset('js/choixVille.js') }}"></script>
 {% endblock %}
 
 
