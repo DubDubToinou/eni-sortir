@@ -3,12 +3,37 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-
-    {{ form_widget(registrationForm) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <div class="formContainer">
+    <div class="responsiveFormContainer">
+        <h2>Inscription</h2>
+        {{ form_start(registrationForm) }}
+        <div class="inputField">
+            <label for="nom">Nom</label>
+            {{ form_widget(registrationForm.nom) }}
+        </div>
+        <div class="inputField">
+            <label for="prenom">Prénom</label>
+            {{ form_widget(registrationForm.prenom) }}
+        </div>
+        <div class="inputField">
+            <label for="email">Email</label>
+            {{ form_widget(registrationForm.email) }}
+        </div>
+        <div class="inputField">
+            <label for="telephone">Telephone</label>
+            {{ form_widget(registrationForm.telephone) }}
+        </div>
+        <div class="inputField">
+            <label for="campus">Campus</label>
+            {{ form_widget(registrationForm.campus) }}
+        </div>
+        <div class="inputField">
+            <label for="plainPassword">Mot de passe</label>
+            {{ form_widget(registrationForm.plainPassword) }}
+        </div>
+        <button type="submit" class="purpleButton">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
+    <img src="{{ asset('img/register.svg') }}" alt="Illustration d'une inscription" width="650px">
+    </div>
 {% endblock %}

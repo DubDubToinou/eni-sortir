@@ -123,7 +123,7 @@ body {
 
 footer {
     width: 100%;
-    position: absolute;
+    position: relative;
     bottom: 0;
     padding: 24px 80px;
     background-color: #F9FAFB;
@@ -385,6 +385,33 @@ form {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.responsiveFormContainer {
+    padding: 16px;
+}
+
+.formContainer>img {
+    display: none;
+}
+
+@media (min-width: 800px) {
+    .formContainer {
+        display: flex;
+        justify-content: center;
+        gap: 144px;
+        padding: 0 112px;
+    }
+
+    .responsiveFormContainer {
+        padding: 48px 0;
+        min-width: 40vh;
+    }
+
+    .formContainer>img {
+        display: block;
+        width: 40vw;
+    }
 }
 
 /* INPUTS */
