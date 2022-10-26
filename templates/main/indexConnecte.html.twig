@@ -107,7 +107,7 @@
                     <td>
                         {% for participant in sortie.participants %}
                             {% if participant is same as (app.user) %}
-                                <p class="greenTag">Inscrit</p>
+                                <img src="{{ asset('img/check.svg') }}" alt="Inscrit" width="20px">
                             {% endif %}
                         {% endfor %}
                     </td>
@@ -138,7 +138,7 @@
                                         src="{{ asset('img/trash.svg') }}" alt="Annuler"></a>
                         {% endif %}
                         {% if sortie.organisateur is same as app.user and sortie.etat.id == 1 %}
-                            <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}">Publier</a>
+                            <a href="{{ path('app_sortie_publier', {'id': sortie.id}) }}"><img src="{{ asset('img/paperPlane.svg') }}" alt="Publier"></a>
                         {% endif %}
                     </td>
                 </tr>
