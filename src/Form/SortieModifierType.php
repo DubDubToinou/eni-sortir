@@ -75,6 +75,7 @@ class SortieModifierType extends AbstractType
                 'mapped'=>false,
             ])
             ->add('lieu', ChoiceType::class, [
+                'label'=>'lieu',
                 'placeholder'=>'-- Choissisez un lieu --'
             ]);
 
