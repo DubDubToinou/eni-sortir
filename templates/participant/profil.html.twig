@@ -6,23 +6,21 @@
 
 {% block body %}
 
-    <h1>{{ participant.nom }}</h1>
+    <div class="containerFlex">
+        <div class="profileContainer">
+            <img src="{{ vich_uploader_asset(participant, 'imageFile') }}" alt="Avatar" width="100px">
+            <div class="subTitles">
+                <h4>{{ participant.prenom }} {{ participant.nom }}</h4>
+                <h3>{{ participant.telephone }} • {{ participant.campus.nom }} </h3>
+            </div>
+        </div>
 
-    <span> <img src="{{ vich_uploader_asset(participant, 'imageFile') }}" alt="avatar"> </span> <br>
-
-    <span> Nom : {{ participant.nom }} </span><br>
-
-    <span> Prénom : {{ participant.prenom }} </span><br>
-
-    <span> Téléphone : {{ participant.telephone }} </span><br>
-
-    <span> Campus : {{ participant.campus.nom }} </span><br>
-
-    <a href="{{ path('app_main') }}"> Retour </a>
-
-    {% if participant is same as (app.user) %}
-        <a  href="{{ path('app_participant_edit', {'id':participant.id}) }}">Modifier</a>
-    {% endif %}
-
+        <div class="buttonContainer">
+            <a class="whiteButton" href="{{ path('app_main') }}"> Retour </a>
+            {% if participant is same as (app.user) %}
+                <a class="purpleButton" href="{{ path('app_participant_edit', {'id':participant.id}) }}">Modifier</a>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

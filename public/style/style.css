@@ -553,3 +553,19 @@ label {
         max-height: 400px;
     }
 }
+
+/* PROFILE */
+
+.profileContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.containerFlex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 78vh;
+}
