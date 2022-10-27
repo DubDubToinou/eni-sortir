@@ -8,7 +8,6 @@ use App\Entity\Ville;
 use App\Repository\VilleRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,28 +19,31 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Sodium\add;
+
 class SortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Titre'
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de début',
-                'widget'=>'single_text',
-                'attr'=>['id'=>'datepicker'],
+                'widget' => 'single_text',
+                'attr' => ['id' => 'datepicker'],
             ])
             ->add('duree', TimeType::class, [
                 'label' => 'Durée éstimée',
-                'widget'=>'single_text',
-                'attr'=>['id'=>'time'],
+                'widget' => 'single_text',
+                'attr' => ['id' => 'time'],
             ])
             ->add('dateLimiteInscription', DateTimeType::class, [
                 'label' => 'Date limite d\'inscription',
-                'widget'=>'single_text',
-                'attr'=>['id'=>'datepicker'],
+                'widget' => 'single_text',
+                'attr' => ['id' => 'datepicker'],
 
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
@@ -50,51 +52,55 @@ class SortieType extends AbstractType
             ->add('infosSortie', TextAreaType::class, [
                 'label' => 'Description'
             ])
+
             ->add('ville', EntityType::class, [
-                'class'=>Ville::class,
-                'label'=>'Ville ',
-                'placeholder'=>'-- Selectionner la ville --',
+                'class' => Ville::class,
+                'label' => 'Ville ',
+                'placeholder' => '-- Selectionner la ville --',
                 'choice_label' => function (Ville $ville) {
                     return $ville->getCodePostal() . ' - ' . $ville->getNom();
                 },
-                'query_builder'=> function (VilleRepository $villeRepository) {
+                'query_builder' => function (VilleRepository $villeRepository) {
                     return $villeRepository->createQueryBuilder('v')->orderBy('v.codePostal', 'ASC');
                 },
-                'required'=>false,
-                'mapped'=>false,
+                'required' => false,
+                'mapped' => false,
+            ])
+            ->add('lieu', TextType::class, [
+                'attr' => [
+                    'placeholder' => '-- Selectionner un lieu --',
+                ]
+            ])
+
+            ->add('ajouterLieu', SubmitType::class, [
+                'label'=>'Chercher le lieu'
+            ])
+            ->add('publier', SubmitType::class, [
+                'label' => 'Publier',
+                'attr' => [
+                    'class' => 'purpleButton'
+                ]
             ]);
 
-        $formModifier = function (FormInterface $form, Ville $ville = null){
+
+        $formModifier = function (FormInterface $form, Ville $ville = null) {
             $lieu = (null === $ville) ? [] : $ville->getLieux();
-            $form->add('lieu', EntityType::class,[
+            $form->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choices' => $lieu,
                 'choice_label' => 'nom',
-                'placeholder' => '-- Choissisez une ville --',
-                'label' => 'Lieu : '
+                'placeholder' => '-- Selectionner une Ville --',
+                'label' => "Lieu : "
             ]);
         };
 
         $builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $eventVille) use ($formModifier){
+            function (FormEvent $eventVille) use ($formModifier) {
                 $ville = $eventVille->getForm()->getData();
                 $formModifier($eventVille->getForm()->getParent(), $ville);
             }
         );
-
-        /*$builder->get('ville')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $form->getParent()->add('lieu', EntityType::class, [
-                    'class' => Lieu::class,
-                    'mapped' => true,
-                    'required' => true,
-                    'choices' => $form->getData()->getLieux()
-                ]);
-            }
-        );*/
     }
 
     public function configureOptions(OptionsResolver $resolver): void

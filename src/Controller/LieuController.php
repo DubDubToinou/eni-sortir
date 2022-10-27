@@ -33,7 +33,7 @@ class LieuController extends AbstractController
 
             $this->addFlash('success', 'Le lieu a bien été ajouté');
 
-            return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_main_connecte', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('lieu/new.html.twig', [

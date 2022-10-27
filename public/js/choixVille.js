@@ -19,7 +19,6 @@ window.onload = () => {
                 content.innerHTML = html;
                 let nouveauSelect = content.querySelector("#sortie_lieu");
                 document.querySelector("#sortie_lieu").replaceWith(nouveauSelect);
-                // document.querySelector("#sortie_lieu").replaceWith(nouveauSelect);
             })
             .catch(error => {
                 console.log(error);

@@ -42,10 +42,11 @@ security:
     access_control:
         - { path: ^/login$, roles: PUBLIC_ACCESS }
         - { path: ^/campus, roles: ROLE_USER}
-        - { path: ^/lieu, roles: ROLE_USER}
         - { path: ^/participant/new, roles: ROLE_ADMIN}
         - { path: ^/participant, roles: ROLE_USER}
-        - { path: ^/index, roles: ROLE_USER }
+        - { path: ^/lieu/new, roles: ROLE_USER}
+        - { path: ^/lieu, roles: ROLE_ADMIN}
+        - { path: ^/index, roles: ROLE_USER}
         - { path: ^/sortie, roles: ROLE_USER}
         - { path: ^/admin, roles: ROLE_ADMIN }
 

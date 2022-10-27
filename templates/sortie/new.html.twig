@@ -17,7 +17,7 @@
     <h1>Organiser une sortie</h1>
 
     {# ---------------------   MODAL ---------------------- -#}
-
+    {#
     <button id="myBtn">Ajouter un lieu</button>
 
     <!-- The Modal -->
@@ -68,14 +68,18 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <button class="btn">Créer en Brouillon</button>
+    <button type="submit" class="purpleButton">Créer en Brouillon</button>
+    <button class="whitePurpleButton"><a href="{{ path('app_lieu_new') }}" target="_blank">Ajouter un lieu</a></button>
+
     {{ form_end(form) }}
 
     <a href="{{ path('app_main_connecte') }}">Annuler</a>
 {% endblock %}
+
 
 {% block script %}
 
     <script src="{{ asset('js/choixVille.js') }}"></script>
 
 {% endblock %}
+

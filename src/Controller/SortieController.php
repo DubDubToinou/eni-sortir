@@ -49,24 +49,19 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($utilisateurConnecte);
         $sortie->addParticipant($utilisateurConnecte);
 
-        $lieu = new Lieu();
-        $lieuForm = $this->createForm(LieuType::class, $lieu);
-        $lieuForm->handleRequest($request);
-
-        if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
-            $lieuRepository->save($lieu,true);
-            $this->addFlash('success', 'Lieu ajouté avec succes !');
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form->get('publier')->isClicked()){
+                $sortie->setEtat($etatRepository->find(2));
+                $sortieRepository->save($sortie, true);
+            }else
                 $sortie->setEtat($etatRepository->find(1));
                 $sortieRepository->save($sortie, true);
 
                 return $this->redirectToRoute('app_main_connecte', [], Response::HTTP_SEE_OTHER);
-            }
+        }
 
         return $this->renderForm('sortie/new.html.twig', [
-            'formLieu' => $lieuForm,
             'sortie' => $sortie,
             'form' => $form,
             'utilisateur'=>$utilisateurConnecte,
