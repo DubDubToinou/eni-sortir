@@ -56,7 +56,7 @@ class SortieType extends AbstractType
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'label' => 'Ville ',
-                'placeholder' => '-- Selectionner la ville --',
+                'placeholder' => 'Selectionner une ville',
                 'choice_label' => function (Ville $ville) {
                     return $ville->getCodePostal() . ' - ' . $ville->getNom();
                 },
@@ -68,18 +68,11 @@ class SortieType extends AbstractType
             ])
             ->add('lieu', TextType::class, [
                 'attr' => [
-                    'placeholder' => '-- Selectionner un lieu --',
+                    'placeholder' => 'Sélectionner un lieu',
                 ]
             ])
-
-            ->add('ajouterLieu', SubmitType::class, [
-                'label'=>'Chercher le lieu'
-            ])
-            ->add('publier', SubmitType::class, [
-                'label' => 'Publier',
-                'attr' => [
-                    'class' => 'purpleButton'
-                ]
+            ->add('chercherLieu', SubmitType::class, [
+                'label'=>'Chercher un lieu'
             ]);
 
 
@@ -89,7 +82,7 @@ class SortieType extends AbstractType
                 'class' => Lieu::class,
                 'choices' => $lieu,
                 'choice_label' => 'nom',
-                'placeholder' => '-- Selectionner une Ville --',
+                'placeholder' => 'Sélectionner une ville',
                 'label' => "Lieu : "
             ]);
         };

@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Organiser{% endblock %}
-
+{% block script %}
+    <script src="{{ asset('js/choixVille.js') }}" defer></script>
+{% endblock %}
 
 {% block style %}
     <style>
@@ -12,74 +14,52 @@
 {% endblock %}
 
 {% block body %}
-
-
-    <h1>Organiser une sortie</h1>
-
-    {# ---------------------   MODAL ---------------------- -#}
-    {#
-    <button id="myBtn">Ajouter un lieu</button>
-
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h4>Ajouter un lieu: </h4>
-            {{ form_start(formLieu) }}
-            {{ form_widget(formLieu) }}
-            <button type="submit">Ajouter</button>
-            {{ form_end(formLieu) }}
+    <div class="formContainer">
+        <div class="responsiveFormContainer">
+            <h2>Organiser une sortie</h2>
+            {{ form_start(form) }}
+            <div class="inputField">
+                <label for="nom">Titre</label>
+                {{ form_widget(form.nom) }}
+            </div>
+            <div class="inputField">
+                <label for="dateHeureDebut">Date et heure de début</label>
+                {{ form_widget(form.dateHeureDebut) }}
+            </div>
+            <div class="inputField">
+                <label for="duree">Durée estimée</label>
+                {{ form_widget(form.duree) }}
+            </div>
+            <div class="inputField">
+                <label for="dateLimiteInscription">Date limite d'inscription</label>
+                {{ form_widget(form.dateLimiteInscription) }}
+            </div>
+            <div class="inputField">
+                <label for="nbInscriptionsMax">Date limite d'inscription</label>
+                {{ form_widget(form.nbInscriptionsMax) }}
+            </div>
+            <div class="inputField">
+                <label for="infosSortie">Description</label>
+                {{ form_widget(form.infosSortie) }}
+            </div>
+            <div class="inputField">
+                <label for="ville">Ville</label>
+                {{ form_widget(form.ville) }}
+                {{ form_widget(form.chercherLieu) }}
+            </div>
+            <div class="inputField">
+                <label for="lieu">Lieu</label>
+                {{ form_widget(form.lieu) }}
+                <a class="purpleLink" href="{{ path('app_lieu_new') }}" target="_blank">Ajouter un lieu</a>
+            </div>
+            <div class="buttonContainer">
+                <a class="whiteButton" href="{{ path('app_main_connecte') }}">Annuler</a>
+                <button type="submit" class="whiteButton">Sauvegarder</button>
+                <button id="publier" type="submit" class="purpleButton">Publier</button>
+            </div>
+            {{ form_end(form) }}
         </div>
-
+        <img src="{{ asset('img/newSortie.svg') }}" alt="Organiser">
     </div>
-
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
-
-    {# ----- FIN MODAL ----- #}
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-
-    <button type="submit" class="purpleButton">Créer en Brouillon</button>
-    <button class="whitePurpleButton"><a href="{{ path('app_lieu_new') }}" target="_blank">Ajouter un lieu</a></button>
-
-    {{ form_end(form) }}
-
-    <a href="{{ path('app_main_connecte') }}">Annuler</a>
-{% endblock %}
-
-
-{% block script %}
-
-    <script src="{{ asset('js/choixVille.js') }}"></script>
-
 {% endblock %}
 
