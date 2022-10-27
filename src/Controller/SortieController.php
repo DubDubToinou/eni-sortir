@@ -85,6 +85,11 @@ class SortieController extends AbstractController
     #[Route('/{id}/edit', name: 'app_sortie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, LieuRepository $lieuRepository): Response
     {
+
+        if ($request->isXmlHttpRequest())
+        {
+            dd($request);
+        }
         $form = $this->createForm(SortieModifierType::class, $sortie);
         $form->handleRequest($request);
 

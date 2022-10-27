@@ -74,8 +74,12 @@ class SortieModifierType extends AbstractType
                 'required'=>false,
                 'mapped'=>false,
             ])
-            ->add('lieu', ChoiceType::class, [
-                'placeholder'=>'-- Choissisez un lieu --'
+
+            ->add('lieu', EntityType::class, [
+                'class'=>Lieu::class,
+                'placeholder'=>'-- Choissisez un lieu --',
+                'choice_label'=>'nom',
+                'choices'=>[],
             ]);
 
             $formModifier = function (FormInterface $form, Ville $ville = null){
