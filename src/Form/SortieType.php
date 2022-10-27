@@ -5,8 +5,10 @@ namespace App\Form;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Repository\VilleRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 class SortieType extends AbstractType
 {
@@ -48,16 +51,39 @@ class SortieType extends AbstractType
                 'label' => 'Description'
             ])
             ->add('ville', EntityType::class, [
-                'class' => Ville::class,
-                'choice_label' => 'nom',
-                'mapped' => false,
-                'required' => false
-            ])
-            ->add('publish', SubmitType::class, [
-                'label' => 'Publier',
+                'class'=>Ville::class,
+                'label'=>'Ville ',
+                'placeholder'=>'-- Selectionner la ville --',
+                'choice_label' => function (Ville $ville) {
+                    return $ville->getCodePostal() . ' - ' . $ville->getNom();
+                },
+                'query_builder'=> function (VilleRepository $villeRepository) {
+                    return $villeRepository->createQueryBuilder('v')->orderBy('v.codePostal', 'ASC');
+                },
+                'required'=>false,
+                'mapped'=>false,
             ]);
 
+        $formModifier = function (FormInterface $form, Ville $ville = null){
+            $lieu = (null === $ville) ? [] : $ville->getLieux();
+            $form->add('lieu', EntityType::class,[
+                'class' => Lieu::class,
+                'choices' => $lieu,
+                'choice_label' => 'nom',
+                'placeholder' => '-- Choissisez une ville --',
+                'label' => 'Lieu : '
+            ]);
+        };
+
         $builder->get('ville')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $eventVille) use ($formModifier){
+                $ville = $eventVille->getForm()->getData();
+                $formModifier($eventVille->getForm()->getParent(), $ville);
+            }
+        );
+
+        /*$builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
                 $form = $event->getForm();
@@ -68,7 +94,7 @@ class SortieType extends AbstractType
                     'choices' => $form->getData()->getLieux()
                 ]);
             }
-        );
+        );*/
     }
 
     public function configureOptions(OptionsResolver $resolver): void

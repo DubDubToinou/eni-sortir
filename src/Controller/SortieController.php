@@ -13,6 +13,7 @@ use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use phpDocumentor\Reflection\Types\String_;
@@ -35,43 +36,73 @@ class SortieController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository, LieuRepository $lieuRepository): Response
+    public function new(Request $request, SortieRepository $sortieRepository,ParticipantRepository $participantRepository, EtatRepository $etatRepository, LieuRepository $lieuRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+       // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
+        $utilisateurConnecte = $participantRepository->find($this->getUser());
 
-        $sortie->setCampus($this->getUser()->getCampus());
-        $sortie->setOrganisateur($this->getUser());
-        $sortie->addParticipant($this->getUser());
+        $sortie->setCampus($utilisateurConnecte->getCampus());
+        $sortie->setOrganisateur($utilisateurConnecte);
+        $sortie->addParticipant($utilisateurConnecte);
 
         $lieu = new Lieu();
         $lieuForm = $this->createForm(LieuType::class, $lieu);
         $lieuForm->handleRequest($request);
 
         if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
-            $lieuRepository->save($lieu, true);
+            $lieuRepository->save($lieu,true);
+            $this->addFlash('success', 'Lieu ajouté avec succes !');
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('publish')->isClicked()) {
-                $sortie->setEtat($etatRepository->find(2));
-            } else {
                 $sortie->setEtat($etatRepository->find(1));
+                $sortieRepository->save($sortie, true);
+
+                return $this->redirectToRoute('app_main_connecte', [], Response::HTTP_SEE_OTHER);
             }
 
-            $sortieRepository->save($sortie, true);
+        return $this->renderForm('sortie/new.html.twig', [
+            'formLieu' => $lieuForm,
+            'sortie' => $sortie,
+            'form' => $form,
+            'utilisateur'=>$utilisateurConnecte,
+        ]);
 
-            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
+
+        /*
+
+        $form = $this->createForm(SortieModifierType::class, $sortie);
+        $form->handleRequest($request);
+
+        $lieu = new Lieu();
+        $formLieu = $this->createForm(LieuType::class, $lieu);
+        $formLieu->handleRequest($request);
+
+        if($formLieu->isSubmitted() && $formLieu->isValid()){
+            $lieuRepository->save($lieu,true);
+
+            $this->addFlash('success', 'lieu ajouté avec success');
         }
 
-        return $this->renderForm('sortie/new.html.twig', [
-            'lieuForm' => $lieuForm,
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortieRepository->save($sortie, true);
+
+            $this->addFlash('success', 'la sortie a été modifié.');
+            return $this->redirectToRoute('app_main_connecte', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('sortie/edit.html.twig', [
+            'formLieu'=>$formLieu,
             'sortie' => $sortie,
             'form' => $form,
         ]);
+    }
+         */
+
     }
 
     #[Route('/{id}', name: 'app_sortie_show', methods: ['GET'])]
@@ -86,10 +117,6 @@ class SortieController extends AbstractController
     public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, LieuRepository $lieuRepository): Response
     {
 
-        if ($request->isXmlHttpRequest())
-        {
-            dd($request);
-        }
         $form = $this->createForm(SortieModifierType::class, $sortie);
         $form->handleRequest($request);
 

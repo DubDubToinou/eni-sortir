@@ -1,20 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Organiser{% endblock %}
-{% block script %}
-    <script defer>
-        const close = document.querySelector('.close');
-        const open = document.querySelector('.open');
 
-        function openPopUp() {
-            document.querySelector('.popUp').style.display = "block";
-        }
-
-        function closePopUp() {
-            document.querySelector('.popUp').style.display = "none";
-        }
-    </script>
-{% endblock %}
 
 {% block style %}
     <style>
@@ -25,24 +12,70 @@
 {% endblock %}
 
 {% block body %}
+
+
     <h1>Organiser une sortie</h1>
+
+    {# ---------------------   MODAL ---------------------- -#}
+
+    <button id="myBtn">Ajouter un lieu</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>Ajouter un lieu: </h4>
+            {{ form_start(formLieu) }}
+            {{ form_widget(formLieu) }}
+            <button type="submit">Ajouter</button>
+            {{ form_end(formLieu) }}
+        </div>
+
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    {# ----- FIN MODAL ----- #}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <button class="btn" name="save">Sauvegarder</button>
+    <button class="btn">Créer en Brouillon</button>
     {{ form_end(form) }}
 
-    <button type="button" class="open" onclick="openPopUp()">Ajouter un lieu</button>
-
-    <div class="popUp">
-        {{ form_start(lieuForm) }}
-        {{ form_widget(lieuForm) }}
-        <button type="submit">Ajouter</button>
-        {{ form_end(lieuForm) }}
-        <button type="button" class="close" onclick="closePopUp()">Annuler</button>
-    </div>
-
-    <a href="{{ path('app_main') }}">Annuler</a>
+    <a href="{{ path('app_main_connecte') }}">Annuler</a>
 {% endblock %}
 
+{% block script %}
+
+    <script src="{{ asset('js/choixVille.js') }}"></script>
+
+{% endblock %}

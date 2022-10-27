@@ -1,6 +1,6 @@
 
 window.onload = () => {
-    let ville = document.querySelector("#sortie_ville");
+    let ville = document.querySelector("#sortie_modifier_ville");
 
     ville.addEventListener("change", function(){
         let form = this.closest("form");
@@ -17,8 +17,8 @@ window.onload = () => {
             .then(html => {
                 let content = document.createElement("html");
                 content.innerHTML = html;
-                let nouveauSelect = content.querySelector("#sortie_lieu");
-                document.querySelector("#sortie_lieu").replaceWith(nouveauSelect);
+                let nouveauSelect = content.querySelector("#sortie_modifier_lieu");
+                document.querySelector("#sortie_modifier_lieu").replaceWith(nouveauSelect);
                 // document.querySelector("#sortie_lieu").replaceWith(nouveauSelect);
             })
             .catch(error => {
