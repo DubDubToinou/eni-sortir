@@ -15,22 +15,22 @@ class EtatService
     public function miseAJourDesEtats(EtatRepository $etatRepository, SortieRepository $sortieRepository, EntityManagerInterface $entityManager): void
     {
 
-        $sorties = $sortieRepository->listeDesSortie();
-        $dateDuJour = new \DateTime();
-        $dateArchive = new \DateTime('-1 month');
-
         /*
          * ETAT
          *
          *      1 - Crée
          *      2 - Ouverte
          *      3 - Cloturée
-         * 4 - Activité en cours
-         * 5 - Passée
-         *          6 - Annulé
-         * 7 - Archivé
+         *      4 - Activité en cours
+         *      5 - Passée
+         *      6 - Annulé
+         *      7 - Archivé
          */
 
+
+        $sorties = $sortieRepository->listeDesSortie();
+        $dateDuJour = new \DateTime();
+        $dateArchive = new \DateTime('-1 month');
 
         foreach ($sorties as $sortieMaj) {
             $sortie = $sortieRepository->find($sortieMaj);
