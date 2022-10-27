@@ -51,39 +51,9 @@
         </div>
         {{ form_end(form) }}
 
-
-        {#
-        <label for="campus">Campus:</label>
-        <select id="campus">
-            {% for campus in campuses %}
-                <option value="{{ campus.id }}">{{ campus.nom }}</option>
-            {% endfor %}
-        </select>
-
-         <label for="rechercher">le nom de la sortie contient :</label>
-        <input type="search" id="rechercher">
-
-        <label for="dateDebut">Entre</label>
-        <input type="date" id="dateDebut">
-
-        <label for="dateFin">et</label>
-        <input type="date" id="dateFin">
-
-        <label for="sortieOrganisateur">Sortie dont je suis l'organisateur/trice</label>
-        <input type="checkbox" id="sortieOrganisateur" name="sortieOrganisateur">
-
-        <label for="sortieInscrit">Sortie dont je suis l'organisateur/trice</label>
-        <input type="checkbox" id="sortieInscrit" name="sortieInscrit/e">
-
-        <label for="sortiePasInscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
-        <input type="checkbox" id="sortiePasInscrit" name="sortiePasInscrit">
-
-        <label for="sortiePassee">Sortie passées</label>
-        <input type="checkbox" id="sortiePassee" name="sortiePassee"> #}
         <div class="table">
             <table>
                 <tr>
-                    <th class="tableHead">ID</th>
                     <th class="tableHead">Sortie</th>
                     <th class="tableHead">Date de début</th>
                     <th class="tableHead">Clôture des inscriptions</th>
@@ -95,7 +65,6 @@
                 </tr>
                 {% for sortie in sorties %}
                     <tr id="contenu">
-                        <td>{{ sortie.id }}</td>
                         {% if sortie.etat.id == 7 %}
                             <td class="tableTitle">{{ sortie.nom }}</td>
                         {% else %}

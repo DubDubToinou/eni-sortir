@@ -32,7 +32,7 @@ class MainController extends AbstractController
     public function indexConnecte(Request $request,EntityManagerInterface $entityManager, EtatService $etatService,EtatRepository $etatRepository, ParticipantRepository $participantRepository, CampusRepository $campusRepository, SortieRepository $sortieRepository): Response
     {
 
-       // $etatService->miseAJourDesEtats($etatRepository, $sortieRepository,$entityManager);
+        $etatService->miseAJourDesEtats($etatRepository, $sortieRepository,$entityManager);
 
         $campus = $campusRepository->findAll();
         $sortie = $sortieRepository->listeDesSortie();
