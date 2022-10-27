@@ -62,14 +62,20 @@
         </tr>
         {% endfor %}
     </table>
-    {% for participant in sortie.participants %}
-        {% if participant is same as (app.user) and sortie.participants %}
-            <a href="{{ path('app_desistement_sortie', {'id': sortie.id}) }}">Se désister</a>
-        {% elseif not sortie.participants is same as participant %}
-            <a href="{{ path('app_inscription_sortie', {'id':sortie.id}) }}">S'inscrire</a>
-        {% endif %}
 
-{% endfor %}
+    {% set compteurParticipantInscrit = 0 %}
+
+    {% for participant in sortie.participants %}
+        {% if participant is same as (app.user) %}
+            {% set compteurParticipantInscrit = compteurParticipantInscrit +1 %}
+            <a href="{{ path('app_desistement_sortie', {'id': sortie.id}) }}">Se désister</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if compteurParticipantInscrit == 0 %}
+        <a href="{{ path('app_inscription_sortie', {'id': sortie.id}) }}">S'inscrire</a>
+    {% endif %}
+
     <a href="{{ path('app_main_connecte') }}">Retour à la liste des sorties</a>
 
     {% if sortie.organisateur is same as (app.user) %}
