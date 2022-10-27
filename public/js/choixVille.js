@@ -6,8 +6,13 @@ window.onload = () => {
         let form = this.closest("form");
         let data = this.name + "=" + this.value ;
 
-        fetch(form.action, {
+        console.log(data),
+
+
+        fetch(window.location.href, {
             method: form.getAttribute("method"),
+            mode: "same-origin",
+            credentials: "same-origin",
             body: data,
             headers: {
                 "content-type": "application/x-www-form-urlencoded; charset:utf-8"
@@ -20,6 +25,8 @@ window.onload = () => {
 
                 let nouveauSelect = content.querySelector("#sortie_modifier_lieu");
                 document.querySelector("#sortie_modifier_lieu").replaceWith(nouveauSelect);
+
+                console.log(nouveauSelect);
             })
 
             .catch(error =>{
