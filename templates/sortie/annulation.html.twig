@@ -1,30 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %}
+    {{ parent() }} Annuler une sortie
+{% endblock %}
 
-    <h1>Annulation de la sortie</h1>
+{% block body %}
+    <div class="formContainer">
+    <div class="responsiveFormContainer">
+    <h2>Annulation de la sortie</h2>
     {% if sortie.organisateur is same as app.user %}
-       Nom de la sortie : {{ sortie.nom }}
-        Heure de la sortie : {{ sortie.dateHeureDebut|date('d/m/Y à h:i') }}
-        Campus : {{ sortie.campus.nom }}
-        Lieu de la sortie : {{ sortie.lieu }}
+        <div class="subTitles">
+            <h3>{{ sortie.nom }}</h3>
+            <h3>Sortie prévue pour le {{ sortie.dateHeureDebut|date('d/m/Y à h:i') }}</h3>
+            <h3>{{ sortie.campus.nom }}</h3>
+            <h3>À {{ sortie.lieu }}</h3>
+        </div>
 
         {{ form_start(form) }}
+        <div class="inputField">
+            <label for="motif">Motif</label>
+            {{ form_widget(form.motif) }}
+        </div>
 
-        {{ form_widget(form) }}
-
-        <button type="submit" onclick="return confirm('Voulez vous vraiment annuler cette sortie ?')">Confirmer</button>
-
-        <a href="{{ path('app_main_connecte') }}">Retour à la Liste Des Sorties</a>
-
+        <div class="buttonContainer">
+            <a class="whiteButton" href="{{ path('app_main_connecte') }}">Retour</a>
+            <button class="redButton" type="submit"
+                    onclick="return confirm('Voulez vous vraiment annuler cette sortie ?')">Confirmer
+            </button>
+        </div>
         {{ form_end(form) }}
+        </div>
+        </div>
+
     {% else %}
         <p>Vous n'êtes pas l'organisateur de cette sortie.</p>
         <a href="{{ path('app_main_connecte') }}">Retour à l'accueil</a>
     {% endif %}
-{% endblock %}
-
-{% block title %}
-    {{ parent() }} Annulation de la sortie
 {% endblock %}
 

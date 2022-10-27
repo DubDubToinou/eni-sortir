@@ -220,6 +220,15 @@ footer > p {
     font-size: 16px;
 }
 
+.redButton {
+    color: #B42318;
+    background: #FEE4E2;
+    border: 1px solid #FEE4E2;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 16px;
+}
+
 .purpleLink {
     color: #7F56D9;
     text-decoration: underline;
