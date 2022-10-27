@@ -39,6 +39,7 @@ class ParticipantType extends AbstractType
                 'allow_delete' => false,
                 'download_label' => false,
                 'download_uri' => false,
+                'image_uri' => false,
                 'required' => false,
                 'attr' => []
             ]);

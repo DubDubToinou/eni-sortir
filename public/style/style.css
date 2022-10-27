@@ -569,3 +569,11 @@ label {
     justify-content: center;
     min-height: 78vh;
 }
+
+.vich_image {
+    display: flex;
+}
+
+.vich_image>a {
+    max-width: 50px;
+}

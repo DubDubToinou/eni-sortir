@@ -1,11 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Participant{% endblock %}
+{% block title %}Modifier mon profil{% endblock %}
 
 {% block body %}
-    <h1>Edit Participant</h1>
-
-    {{ include('participant/_form.html.twig', {'button_label': 'Modifier'}) }}
-    <a href="{{ path('app_new_password') }}">Modifier mon mot de passe</a>
-
+    <div class="formContainer">
+        <div class="responsiveFormContainer">
+            <h2>Modifier mon profil</h2>
+            {{ form_start(form) }}
+            <div class="inputField">
+                <label for="nom">Nom</label>
+                {{ form_widget(form.nom) }}
+            </div>
+            <div class="inputField">
+                <label for="prenom">Prénom</label>
+                {{ form_widget(form.prenom) }}
+            </div>
+            <div class="inputField">
+                <label for="email">Email</label>
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="inputField">
+                <label for="telephone">Telephone</label>
+                {{ form_widget(form.telephone) }}
+            </div>
+            <div class="inputField">
+                <label for="campus">Campus</label>
+                {{ form_widget(form.campus) }}
+            </div>
+            <div class="inputField">
+                <label for="imageFile">Photo de profil</label>
+                {{ form_widget(form.imageFile) }}
+            </div>
+            <div class="buttonContainer">
+                <a class="whiteButton" href="{{ path('app_new_password') }}">Modifier mon mot de passe</a>
+                <button class="purpleButton">Valider</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
