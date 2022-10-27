@@ -218,6 +218,12 @@ footer > p {
     text-decoration: underline;
 }
 
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 /* TAGS */
 
 .greenTag, .Ouverte {
@@ -297,7 +303,7 @@ table {
     overflow: auto;
 }
 
-.tableHead {
+.tableHead, th {
     background: #F9FAFB;
     border-bottom: 1px solid #EAECF0;
     padding: 12px 24px;
@@ -459,8 +465,75 @@ h2 {
     font-family: 'Sora', sans-serif;
 }
 
+h3 {
+    color: #667085;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+h4 {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+}
+
 label {
     color: #344054;
     font-size: 14px;
     font-weight: 600;
+}
+
+/* INFO & SHOW */
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+    min-height: 79vh;
+}
+
+.infoTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.infoHead, .infoTables, .tableWithTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+@media (min-width: 850px) {
+    .infoContainer {
+        align-items: flex-start;
+        padding: 24px 112px;
+        gap: 32px;
+    }
+
+    .infoHead {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .infoHead {
+        width: 100%;
+    }
+
+    .infoTables {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 24px;
+        width: 100%;
+    }
+
+    .tableWithTitle {
+        align-items: flex-start;
+        overflow: auto;
+        max-height: 400px;
+    }
 }
