@@ -203,23 +203,26 @@ class SortieController extends AbstractController
     #[Route('/annulation/{id}', name: 'app_sortie_annulation', methods: ['GET', 'POST'])]
     public function annulation(int $id, Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
+        $dateDuJour = new \DateTime();
         $form = $this->createForm(AnnulationFormType::class, $sortie);
         $form->handleRequest($request);
 
         $participant = $this->getUser();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        $sortie = $sortieRepository->find($id);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $sortie->setEtat($etatRepository->find(6));
-                $sortieRepository->save($sortie, true);
-                $this->addFlash("succes", "Annulation confirmée.");
-                return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+            if ($sortie->getDateHeureDebut()->getTimestamp() < $dateDuJour->getTimestamp()){
+                $this->addFlash('failure', 'Événement déjà terminé. Annulation impossible.');
             }
+        $sortie = $sortieRepository->find($id);
+        $sortie->setEtat($etatRepository->find(6));
+        $sortieRepository->save($sortie, true);
+        $this->addFlash("succes", "Annulation confirmée.");
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+    }
 
             return $this->renderForm('sortie/annulation.html.twig', [
                 'sortie' => $sortie,
                 'form' => $form,]);
-
 
     }
 
