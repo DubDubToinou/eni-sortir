@@ -175,19 +175,20 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         $participant = $this->getUser();
+        if ($form->isSubmitted() && $form->isValid()) {
+        if ($sortie->getDateHeureDebut()->getTimestamp()<new \DateTime('now')){
 
         $sortie = $sortieRepository->find($id);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $sortie->setEtat($etatRepository->find(6));
-                $sortieRepository->save($sortie, true);
-                $this->addFlash("succes", "Annulation confirmée.");
-                return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
-            }
+            $sortie->setEtat($etatRepository->find(6));
+            $sortieRepository->save($sortie, true);
+            $this->addFlash("succes", "Annulation confirmée.");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()], Response::HTTP_SEE_OTHER);
+        }
+    }
 
             return $this->renderForm('sortie/annulation.html.twig', [
                 'sortie' => $sortie,
                 'form' => $form,]);
-
 
     }
 
