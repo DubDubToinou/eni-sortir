@@ -488,7 +488,6 @@ h3 {
 }
 
 h4 {
-    font-family: 'Sora', sans-serif;
     font-size: 18px;
 }
 
@@ -576,4 +575,17 @@ label {
 
 .vich_image>a {
     max-width: 50px;
+}
+
+/* ALERT & MESSAGES */
+
+.successModal {
+    width: 400px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 24px -4px rgba(16, 24, 40, 0.08), 0 8px 8px -4px rgba(16, 24, 40, 0.03);
+    border-radius: 12px;
+    gap: 12px;
 }
