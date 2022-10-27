@@ -577,6 +577,10 @@ label {
     max-width: 50px;
 }
 
+.profileContainer>img {
+    border-radius: 50px;
+}
+
 /* ALERT & MESSAGES */
 
 .successModal {
@@ -588,4 +592,24 @@ label {
     box-shadow: 0 20px 24px -4px rgba(16, 24, 40, 0.08), 0 8px 8px -4px rgba(16, 24, 40, 0.03);
     border-radius: 12px;
     gap: 12px;
+}
+
+.flash-success {
+    background: #D1FADF;
+    padding: 4px 10px;
+    border-radius: 16px;
+    color: #027A48;
+    font-size: 14px;
+    display: inline-flex;
+    margin: 8px;
+}
+
+.flash-error {
+    background: #FEE4E2;
+    padding: 4px 10px;
+    border-radius: 16px;
+    color: #B42318;
+    font-size: 14px;
+    display: inline-flex;
+    margin: 8px;
 }
