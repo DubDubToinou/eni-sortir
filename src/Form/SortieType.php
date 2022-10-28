@@ -73,6 +73,12 @@ class SortieType extends AbstractType
             ])
             ->add('chercherLieu', SubmitType::class, [
                 'label'=>'Chercher un lieu'
+            ])
+            ->add('publier', SubmitType::class, [
+                'label' => 'Publier',
+                'attr' => [
+                    'class' => 'purpleButton'
+                ]
             ]);
 
 

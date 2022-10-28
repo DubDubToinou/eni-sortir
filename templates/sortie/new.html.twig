@@ -31,7 +31,7 @@
                 {{ form_widget(form.duree) }}
             </div>
             <div class="inputField">
-                <label for="dateLimiteInscription">Date limite d'inscription</label>
+                <label for="dateLimiteInscription">Nombre de places</label>
                 {{ form_widget(form.dateLimiteInscription) }}
             </div>
             <div class="inputField">
@@ -55,7 +55,7 @@
             <div class="buttonContainer">
                 <a class="whiteButton" href="{{ path('app_main_connecte') }}">Annuler</a>
                 <button type="submit" class="whiteButton">Sauvegarder</button>
-                <button id="publier" type="submit" class="purpleButton">Publier</button>
+                {{ form_widget(form.publier) }}
             </div>
             {{ form_end(form) }}
         </div>
