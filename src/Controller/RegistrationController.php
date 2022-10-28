@@ -24,10 +24,12 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $random = rand(1, 9);
+
             $user->setAdministrateur(false);
             $user->setActif(true);
             $user->setRoles(['ROLE_USER']);
-            $user->setImageName('default.jpg');
+            $user->setImageName("$random.svg");
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
